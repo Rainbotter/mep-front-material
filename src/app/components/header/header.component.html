@@ -1,0 +1,41 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Gestionnaire de MEP</span>
+    <span class="spacer"></span>
+    <button mat-raised-button
+            [routerLink]="['/home']"
+            color="accent"
+            class="button-spacer">
+      <mat-icon aria-hidden="false" aria-label="home icon">home</mat-icon>
+      Home
+    </button>
+    <button mat-raised-button
+            [routerLink]="['/meps']"
+            color="accent"
+            class="button-spacer">
+      <mat-icon aria-hidden="false" aria-label="home icon">dashboard</mat-icon>
+      Voir toutes les meps
+    </button>
+    <button mat-raised-button
+            [routerLink]="['/mepCreation']"
+            color="accent"
+            class="button-spacer">
+      <mat-icon aria-hidden="false" aria-label="home icon">add</mat-icon>
+      Créer une mep
+    </button>
+    <button mat-raised-button
+            [routerLink]="['/templates']"
+            color="accent"
+            class="button-spacer">
+      <mat-icon aria-hidden="false" aria-label="home icon">note</mat-icon>
+      Voir tous les templates
+    </button>
+    <button mat-raised-button
+            [routerLink]="['/templateCreation']"
+            color="accent"
+            class="button-spacer">
+      <mat-icon aria-hidden="false" aria-label="home icon">note_add</mat-icon>
+      Créer un template
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>

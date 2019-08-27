@@ -15,6 +15,7 @@
       "app",
       "camelCase"
     ],
+    "whitespace": [true, "check-module"],
     "component-selector": [
       true,
       "element",
