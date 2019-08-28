@@ -10,7 +10,16 @@ import { MepFormComponent } from './pages/mep-form/mep-form.component';
 import { MepComponent } from './pages/mep/mep.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { MatButtonModule, MatIconModule, MatSelectModule, MatSortModule, MatTableModule, MatToolbarModule } from '@angular/material';
+import {
+  MatAutocompleteModule,
+  MatButtonModule, MatCardModule, MatGridListModule,
+  MatIconModule, MatInputModule, MatProgressSpinnerModule,
+  MatSelectModule,
+  MatSortModule,
+  MatStepperModule,
+  MatTableModule,
+  MatToolbarModule
+} from '@angular/material';
 import { MepsComponent } from './pages/meps/meps.component';
 import { TemplatesComponent } from './pages/templates/templates.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -43,7 +52,13 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatTableModule,
     MatSelectModule,
+    MatStepperModule,
     MatSortModule,
+    MatInputModule,
+    MatGridListModule,
+    MatAutocompleteModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

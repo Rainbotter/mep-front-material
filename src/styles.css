@@ -27,3 +27,15 @@ body {
   background-color: #efefef;
   text-align: center;
 }
+
+.spinner-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 999;
+}
+
+.disabled-content {
+  opacity: 0.4;
+  pointer-events: none;
+}

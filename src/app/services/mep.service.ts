@@ -25,4 +25,17 @@ export class MepService {
       .toPromise();
   }
 
+  public createMep(name: string, project: string, version: string, templateId: string): Promise<Mep> {
+    const requestObject = {name, project, version, templateId};
+
+    return this.http.post<Mep>(`${environment.apiUrl}${environment.paths.meps}`, requestObject)
+      .pipe(map(mep => {
+        mep.closureDate = mep.closureDate ? new Date(mep.closureDate) : null;
+        mep.lastModificationDate = mep.lastModificationDate ? new Date(mep.lastModificationDate) : null;
+        mep.creationDate = mep.creationDate ? new Date(mep.creationDate) : null;
+        return mep;
+      }))
+      .toPromise();
+  }
+
 }
