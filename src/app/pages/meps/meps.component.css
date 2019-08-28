@@ -5,3 +5,7 @@ table {
 .action-column {
   text-align: right;
 }
+
+.filter_button {
+  margin-left: 1rem;
+}

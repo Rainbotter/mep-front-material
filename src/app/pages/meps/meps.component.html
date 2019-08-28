@@ -1,44 +1,57 @@
-<table mat-table [dataSource]="meps" class="mat-elevation-z8">
+<mat-form-field class="filter_button">
+  <mat-label>Projets</mat-label>
+  <mat-select [formControl]="projectControl" multiple>
+    <mat-option *ngFor="let project of projects" [value]="project">{{project}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field class="filter_button">
+  <mat-label>Status</mat-label>
+  <mat-select [formControl]="statusControl" multiple>
+    <mat-option *ngFor="let status of statuses" [value]="status">{{status}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+<table mat-table matSort [dataSource]="meps" class="mat-elevation-z8">
 
   <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Nom</th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Nom</th>
     <td mat-cell *matCellDef="let element"> {{element.name}} </td>
   </ng-container>
 
   <ng-container matColumnDef="status">
-    <th mat-header-cell *matHeaderCellDef> Status</th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Status</th>
     <td mat-cell *matCellDef="let element"> {{computeStatus(element)}} </td>
   </ng-container>
 
   <ng-container matColumnDef="project">
-    <th mat-header-cell *matHeaderCellDef> Projet</th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Projet</th>
     <td mat-cell *matCellDef="let element"> {{element.project}} </td>
   </ng-container>
 
   <ng-container matColumnDef="creationDate">
-    <th mat-header-cell *matHeaderCellDef> Date de création</th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Date de création</th>
     <td mat-cell *matCellDef="let element"> {{element.creationDate | date: 'dd/MM/yyyy HH:mm'}} </td>
   </ng-container>
 
   <ng-container matColumnDef="lastModificationDate">
-    <th mat-header-cell *matHeaderCellDef> Date de dernière modification</th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Date de dernière modification</th>
     <td mat-cell *matCellDef="let element"> {{element.lastModificationDate | date: 'dd/MM/yyyy HH:mm'}} </td>
   </ng-container>
 
   <ng-container matColumnDef="closureDate">
-    <th mat-header-cell *matHeaderCellDef> Date de fermeture</th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Date de fermeture</th>
     <td mat-cell *matCellDef="let element"> {{element.closureDate | date: 'dd/MM/yyyy HH:mm'}} </td>
   </ng-container>
 
   <ng-container matColumnDef="action">
-    <th mat-header-cell *matHeaderCellDef></th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element" class="action-column">
       <button mat-stroked-button
               [routerLink]="['/mep']"
               [queryParams]="{id: element.id}"
               color="primary">
-        <mat-icon aria-hidden="false" aria-label="home icon">edit</mat-icon>
-        Modifier
+        Visualiser
       </button>
     </td>
   </ng-container>

@@ -10,12 +10,13 @@ import { MepFormComponent } from './pages/mep-form/mep-form.component';
 import { MepComponent } from './pages/mep/mep.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { MatButtonModule, MatIconModule, MatTableModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule, MatIconModule, MatSelectModule, MatSortModule, MatTableModule, MatToolbarModule } from '@angular/material';
 import { MepsComponent } from './pages/meps/meps.component';
 import { TemplatesComponent } from './pages/templates/templates.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TemplateComponent } from './pages/template/template.component';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { CommonModule } from '@angular/common';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
@@ -39,7 +41,9 @@ import { CommonModule } from '@angular/common';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatSelectModule,
+    MatSortModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
