@@ -1,0 +1,86 @@
+table {
+  width: 100%;
+}
+
+.api-table-header-created,
+.api-table-header-created:focus {
+  background: #FFDDDD !important;
+}
+
+.api-table-header-created:hover {
+  background: #F0D0D0 !important;
+}
+
+.api-table-header-started,
+.api-table-header-started:focus {
+  background: #FFFFCF !important;
+}
+
+.api-table-header-started:hover {
+  background: #F0F0C0 !important;
+}
+
+.api-table-header-completed,
+.api-table-header-completed:focus {
+  background: #D9FFDF !important;
+}
+
+.api-table-header-completed:hover {
+  background: #D0F0D0 !important;
+}
+
+.stepset:first-child {
+  margin-right: 0.25rem;
+}
+
+.stepset:last-child {
+  margin-left: 0.25rem;
+}
+
+.stepset:nth-child {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
+.stepset-header {
+  border-bottom: darkgray 1px solid;
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.api-form {
+  margin-top: 1rem;
+}
+
+.step-sets,
+.steps {
+  display: inline-flex;
+}
+
+.step-set {
+  margin-bottom: 0.5rem;
+}
+
+.step-button {
+  border-radius: 0 !important;
+}
+
+.step-button-nok {
+  background-color: #FFDDDD;
+}
+
+.step-button-ok {
+  background-color: #D9FFDF;
+}
+
+.step-button-na {
+  background-color: #efebe3;
+}
+
+.step-button-pending {
+  background-color: #FFFFCF;
+}
+
+.formField {
+  margin-right: 1rem;
+}

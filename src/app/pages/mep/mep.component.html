@@ -1,1 +1,87 @@
-<p>mep works!</p>
+<mat-accordion [multi]="true">
+  <mat-expansion-panel *ngFor="let api of mep?.apis"
+                       class="mat-elevation-z0">
+    <mat-expansion-panel-header [class.api-table-header-created]="isCreated(api)"
+                                [class.api-table-header-started]="isStarted(api)"
+                                [class.api-table-header-completed]="isCompleted(api)">
+      <mat-panel-title>
+        {{api.name}}
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="api-form">
+
+      <h4>Informations générales</h4>
+      <div>
+        <mat-form-field class="formField">
+          <input matInput placeholder="maintainer" [(ngModel)]="api.maintainer">
+        </mat-form-field>
+
+        <mat-form-field class="formField">
+          <input matInput placeholder="change" [(ngModel)]="api.change">
+        </mat-form-field>
+
+        <mat-form-field class="formField">
+          <input matInput placeholder="comment" [(ngModel)]="api.comment">
+        </mat-form-field>
+
+        <mat-form-field class="formField">
+          <input matInput placeholder="dbUpdate" [(ngModel)]="api.dbUpdate">
+        </mat-form-field>
+
+        <mat-form-field class="formField">
+          <input matInput placeholder="exposition" [(ngModel)]="api.exposition">
+        </mat-form-field>
+      </div>
+
+      <h4>Docker</h4>
+      <div>
+        <mat-form-field class="formField">
+          <input matInput placeholder="type" [(ngModel)]="api.type">
+        </mat-form-field>
+
+        <mat-form-field class="formField">
+          <input matInput placeholder="dockerImage" [(ngModel)]="api.dockerImage">
+        </mat-form-field>
+      </div>
+
+      <h4>Version</h4>
+      <div>
+        <mat-form-field class="formField">
+          <input matInput placeholder="newVersion" [(ngModel)]="api.newVersion">
+        </mat-form-field>
+
+        <mat-form-field class="formField">
+          <input matInput placeholder="oldVersion" [(ngModel)]="api.oldVersion">
+        </mat-form-field>
+      </div>
+
+      <h4>A faire</h4>
+      <div class="step-sets">
+        <div class="stepset" *ngFor="let stepset of api.stepsets">
+          <div class="stepset-header">
+            {{stepset.name}}
+          </div>
+          <div class="steps" *ngFor="let step of stepset.steps">
+            <div>
+              <button [class.step-button-ok]="step.status === 'OK'"
+                      [class.step-button-nok]="step.status === 'NOK'"
+                      [class.step-button-na]="step.status === 'NA'"
+                      [class.step-button-pending]="step.status === 'PENDING'"
+                      [matMenuTriggerFor]="menu"
+                      mat-stroked-button
+                      class="step-button">
+                {{step.name}}
+              </button>
+              <mat-menu #menu="matMenu">
+                <button *ngFor="let status of statuses" mat-menu-item
+                        (click)="setStepStatus(step, status)">{{status}}</button>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

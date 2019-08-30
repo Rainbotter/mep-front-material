@@ -1,5 +1,7 @@
 <mep-header></mep-header>
-<div class="content">
+<div class="content" [class.disabled-content]="app.isLoading()">
   <router-outlet></router-outlet>
 </div>
 <mep-footer class="footer"></mep-footer>
+
+<mat-spinner *ngIf="app.isLoading()" class="spinner-center"></mat-spinner>

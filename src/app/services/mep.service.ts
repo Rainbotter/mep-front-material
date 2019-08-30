@@ -16,11 +16,24 @@ export class MepService {
     return this.http.get<Mep[]>(`${environment.apiUrl}${environment.paths.meps}`)
       .pipe(map(value => {
         value.forEach(mep => {
-          mep.closureDate = mep.closureDate ? new Date(mep.closureDate) : null;
-          mep.lastModificationDate = mep.lastModificationDate ? new Date(mep.lastModificationDate) : null;
-          mep.creationDate = mep.creationDate ? new Date(mep.creationDate) : null;
+          this.mapDatesToMep(mep);
         });
         return value;
+      }))
+      .toPromise();
+  }
+
+  public getMep(mepId: string): Promise<Mep> {
+    return this.http.get<Mep>(`${environment.apiUrl}${environment.paths.meps}/${mepId}`)
+      .pipe(map(mep => {
+        this.mapDatesToMep(mep);
+        mep.apis.forEach(api => {
+          api.stepsets.sort((a, b) => {return a.order - b.order;});
+          api.stepsets.forEach(stepset => {
+            stepset.steps.sort((a, b) => {return a.order - b.order;});
+          })
+        });
+        return mep;
       }))
       .toPromise();
   }
@@ -30,12 +43,16 @@ export class MepService {
 
     return this.http.post<Mep>(`${environment.apiUrl}${environment.paths.meps}`, requestObject)
       .pipe(map(mep => {
-        mep.closureDate = mep.closureDate ? new Date(mep.closureDate) : null;
-        mep.lastModificationDate = mep.lastModificationDate ? new Date(mep.lastModificationDate) : null;
-        mep.creationDate = mep.creationDate ? new Date(mep.creationDate) : null;
+        this.mapDatesToMep(mep);
         return mep;
       }))
       .toPromise();
+  }
+
+  private mapDatesToMep(mep: Mep): void {
+    mep.closureDate = mep.closureDate ? new Date(mep.closureDate) : null;
+    mep.lastModificationDate = mep.lastModificationDate ? new Date(mep.lastModificationDate) : null;
+    mep.creationDate = mep.creationDate ? new Date(mep.creationDate) : null;
   }
 
 }

@@ -8,6 +8,7 @@ import { ApiService } from '../../services/api.service';
 import { Api } from '../../interfaces/responses/mep/api';
 import { MatTable } from '@angular/material';
 import { Router } from '@angular/router';
+import { ApplicationService } from '../../services/application.service';
 
 @Component({
   selector: 'mep-mep-form',
@@ -36,8 +37,6 @@ export class MepFormComponent implements OnInit {
   public apiOldVersionControl: FormControl;
   public apiNewVersionControl: FormControl;
 
-  public loading: boolean;
-
   @ViewChild(MatTable, {static: false}) apiTable: MatTable<Api>;
 
   public displayedColumns: string[] = ['name', 'maintainer', 'type', 'newVersion', 'oldVersion', 'action'];
@@ -46,13 +45,13 @@ export class MepFormComponent implements OnInit {
               private mepService: MepService,
               private apiService: ApiService,
               private templateService: TemplateService,
-              private router: Router) {
+              private router: Router,
+              private app: ApplicationService) {
 
   }
 
   ngOnInit() {
     this.apis = [];
-    this.loading = false;
 
     this.nameControl = this._formBuilder.control('', Validators.required);
     this.projectControl = this._formBuilder.control('', Validators.required);
@@ -134,7 +133,7 @@ export class MepFormComponent implements OnInit {
 
   public createMep(): void {
     if (this.canSubmit()) {
-      this.loading = true;
+      this.app.startLoading();
       this.mepService.createMep(this.nameControl.value, this.projectControl.value, this.versionControl.value, this.templateControl.value.id)
         .then(res => {
           const apisCalls = [];
@@ -143,12 +142,15 @@ export class MepFormComponent implements OnInit {
           );
 
           Promise.all(apisCalls)
-            .then(value => this.router.navigate(['/meps']))
+            .then(value => {
+              this.app.stopLoading();
+              //this.router.navigate(['/meps']);
+            })
             .catch(err => console.log(err));
 
         })
         .catch(err => {
-          this.loading = false;
+          this.app.stopLoading();
         });
     }
   }

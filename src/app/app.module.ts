@@ -12,8 +12,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import {
   MatAutocompleteModule,
-  MatButtonModule, MatCardModule, MatGridListModule,
-  MatIconModule, MatInputModule, MatProgressSpinnerModule,
+  MatButtonModule, MatCardModule, MatExpansionModule, MatGridListModule,
+  MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule,
   MatSelectModule,
   MatSortModule,
   MatStepperModule,
@@ -25,7 +25,7 @@ import { TemplatesComponent } from './pages/templates/templates.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TemplateComponent } from './pages/template/template.component';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -59,6 +59,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatAutocompleteModule,
     MatCardModule,
     MatProgressSpinnerModule,
+    MatExpansionModule,
+    FormsModule,
+    MatMenuModule,
+    MatListModule,
+    MatProgressBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
