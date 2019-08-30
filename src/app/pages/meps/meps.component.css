@@ -9,3 +9,9 @@ table {
 .filter_button {
   margin-left: 1rem;
 }
+
+.header {
+  width: 100%;
+  display: inline-flex;
+  justify-content: space-between;
+}

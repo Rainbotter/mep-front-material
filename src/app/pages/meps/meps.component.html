@@ -1,16 +1,27 @@
-<mat-form-field class="filter_button">
-  <mat-label>Projets</mat-label>
-  <mat-select [formControl]="projectControl" multiple>
-    <mat-option *ngFor="let project of projects" [value]="project">{{project}}</mat-option>
-  </mat-select>
-</mat-form-field>
+<div class="header">
+  <div>
+    <mat-form-field class="filter_button">
+      <mat-label>Projets</mat-label>
+      <mat-select [formControl]="projectControl" multiple>
+        <mat-option *ngFor="let project of projects" [value]="project">{{project}}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-<mat-form-field class="filter_button">
-  <mat-label>Status</mat-label>
-  <mat-select [formControl]="statusControl" multiple>
-    <mat-option *ngFor="let status of statuses" [value]="status">{{status}}</mat-option>
-  </mat-select>
-</mat-form-field>
+    <mat-form-field class="filter_button">
+      <mat-label>Status</mat-label>
+      <mat-select [formControl]="statusControl" multiple>
+        <mat-option *ngFor="let status of statuses" [value]="status">{{status}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-paginator [length]="length"
+                   [pageSize]="pageSize"
+                   (page)="changePage($event)">
+    </mat-paginator>
+  </div>
+</div>
 
 <table mat-table matSort [dataSource]="meps">
 
@@ -59,4 +70,3 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-

@@ -3,6 +3,7 @@ import { MepService } from '../../services/mep.service';
 import { Mep } from '../../interfaces/responses/mep/mep';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { PageEvent } from '@angular/material';
 
 @Component({
   selector: 'mep-meps',
@@ -19,19 +20,20 @@ export class MepsComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = ['name', 'status', 'project', 'creationDate', 'lastModificationDate', 'closureDate', 'action'];
 
+  public length = 100;
+  public pageSize = 10;
+
   public projectControl = new FormControl();
   public statusControl = new FormControl();
 
   private subscriptions: Subscription[] = [];
 
   constructor(private mepService: MepService) {
-  }
-
-  ngOnInit() {
     this.mepService.getMeps()
       .then(res => {
         this.allMeps = res;
-        this.meps = this.allMeps;
+        this.meps = this.allMeps.slice(0, this.pageSize);
+        this.length = this.allMeps.length;
 
         this.projects = Array.from(new Set(this.allMeps.map(mep => mep.project)));
         this.statuses = ['En cours', 'Fermée'];
@@ -46,6 +48,9 @@ export class MepsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.statusControl.valueChanges.subscribe(value => {
       this.updateMepsToDisplay();
     }));
+  }
+
+  ngOnInit() {
   }
 
   ngOnDestroy(): void {
@@ -73,6 +78,12 @@ export class MepsComponent implements OnInit, OnDestroy {
         return true;
       }
     );
+
+    this.length = this.meps.length;
   }
 
+  public changePage(pageEvent: PageEvent): void {
+    this.updateMepsToDisplay();
+    this.meps = this.meps.slice(pageEvent.pageIndex * pageEvent.pageSize, (pageEvent.pageIndex * pageEvent.pageSize) + pageEvent.pageSize);
+  }
 }

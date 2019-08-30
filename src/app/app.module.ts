@@ -13,7 +13,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import {
   MatAutocompleteModule,
   MatButtonModule, MatCardModule, MatExpansionModule, MatGridListModule,
-  MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule,
+  MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatPaginatorModule, MatProgressBarModule, MatProgressSpinnerModule,
   MatSelectModule,
   MatSortModule,
   MatStepperModule,
@@ -64,6 +64,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatMenuModule,
     MatListModule,
     MatProgressBarModule,
+    MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
