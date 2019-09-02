@@ -11,9 +11,21 @@ import { MepComponent } from './pages/mep/mep.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import {
+  MAT_DATE_LOCALE,
   MatAutocompleteModule,
-  MatButtonModule, MatCardModule, MatExpansionModule, MatGridListModule,
-  MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatPaginatorModule, MatProgressBarModule, MatProgressSpinnerModule,
+  MatButtonModule,
+  MatCardModule,
+  MatDatepickerModule,
+  MatExpansionModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
   MatSelectModule,
   MatSortModule,
   MatStepperModule,
@@ -26,6 +38,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TemplateComponent } from './pages/template/template.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -65,8 +78,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatListModule,
     MatProgressBarModule,
     MatPaginatorModule,
+    FontAwesomeModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

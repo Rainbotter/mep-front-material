@@ -48,8 +48,18 @@ table {
   margin-bottom: 0.25rem;
 }
 
+.api-content{
+  display: inline-block;
+}
+
 .api-form {
   margin-top: 1rem;
+  margin-right: 1rem!important;
+}
+
+.step-form {
+  margin-top: 1rem;
+  margin-right: 1rem!important;
 }
 
 .step-sets,

@@ -8,6 +8,8 @@ export const environment = {
   paths: {
     meps: '/meps',
     templates: '/templates',
-    apis: '/apis'
+    apis: '/apis',
+    stepsets: '/stepsets',
+    steps: '/steps',
   }
 };

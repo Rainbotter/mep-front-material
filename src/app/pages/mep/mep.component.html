@@ -1,3 +1,46 @@
+<mat-form-field class="formField" appearance="outline">
+  <mat-label>Projet</mat-label>
+  <input autocomplete="off"
+         (focusout)="updateMepValue(mep, 'version')"
+         (focusin)="saveFocusinValue(mep.project)"
+         [(ngModel)]="mep.project"
+         matInput placeholder="maintainer">
+</mat-form-field>
+
+<mat-form-field class="formField" appearance="outline">
+  <mat-label>Version</mat-label>
+  <input autocomplete="off"
+         (focusout)="updateMepValue(mep, 'version')"
+         (focusin)="saveFocusinValue(mep.version)"
+         [(ngModel)]="mep.version"
+         matInput placeholder="maintainer">
+</mat-form-field>
+
+<mat-form-field class="formField" appearance="outline"
+                (click)="saveFocusinValue(mep?.dueDate?.toISOString() || '');">
+  <mat-label>Date de la mep</mat-label>
+  <input autocomplete="off" matInput
+         [matDatepicker]="dueDatePick"
+         [(ngModel)]="mep.dueDate">
+  <mat-datepicker-toggle matSuffix [for]="dueDatePick"></mat-datepicker-toggle>
+  <mat-datepicker (closed)="mep.dueDate.setHours(12); updateMepValue(mep, 'dueDate')" disabled="false" #dueDatePick></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field class="formField" appearance="outline">
+  <mat-label>Dernière modification</mat-label>
+  <input disabled autocomplete="off" matInput [(ngModel)]="mep.lastModificationDate">
+  <mat-datepicker-toggle matSuffix [for]="dueDatePick"></mat-datepicker-toggle>
+  <mat-datepicker disabled="true" #dueDatePick></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field class="formField" appearance="outline">
+  <mat-label>Date de clotûre</mat-label>
+  <input disabled autocomplete="off" matInput>
+</mat-form-field>
+
+<button *ngIf="!mep.closureDate" (click)="closeMep(mep)" mat-flat-button color="primary">Clotûrer la mep</button>
+<button *ngIf="mep.closureDate" (click)="reOpenMep(mep)" mat-flat-button color="primary">re-ouvrir la mep</button>
+
 <mat-accordion [multi]="true">
   <mat-expansion-panel *ngFor="let api of mep?.apis"
                        class="mat-elevation-z0">
@@ -10,53 +53,98 @@
       <mat-panel-description>
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <div class="api-form">
-
+    <div class="api-content">
       <h4>Informations générales</h4>
       <div>
-        <mat-form-field class="formField">
-          <input matInput placeholder="maintainer" [(ngModel)]="api.maintainer">
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Mainteneur</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'maintainer')"
+                 (focusin)="saveFocusinValue(api.maintainer)"
+                 [(ngModel)]="api.maintainer"
+                 matInput placeholder="maintainer">
         </mat-form-field>
 
-        <mat-form-field class="formField">
-          <input matInput placeholder="change" [(ngModel)]="api.change">
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Change</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'change')"
+                 (focusin)="saveFocusinValue(api.maintainer)"
+                 [(ngModel)]="api.change"
+                 matInput placeholder="change">
         </mat-form-field>
 
-        <mat-form-field class="formField">
-          <input matInput placeholder="comment" [(ngModel)]="api.comment">
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Commentaire</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'comment')"
+                 (focusin)="saveFocusinValue(api.maintainer)"
+                 [(ngModel)]="api.comment"
+                 matInput placeholder="Commentaire">
         </mat-form-field>
 
-        <mat-form-field class="formField">
-          <input matInput placeholder="dbUpdate" [(ngModel)]="api.dbUpdate">
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Update DB ?</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'dbUpdate')"
+                 (focusin)="saveFocusinValue(api.maintainer)"
+                 [(ngModel)]="api.dbUpdate"
+                 matInput placeholder="Update DB ?">
         </mat-form-field>
 
-        <mat-form-field class="formField">
-          <input matInput placeholder="exposition" [(ngModel)]="api.exposition">
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Exposition</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'exposition')"
+                 (focusin)="saveFocusinValue(api.maintainer)"
+                 [(ngModel)]="api.exposition"
+                 matInput placeholder="exposition">
         </mat-form-field>
       </div>
 
       <h4>Docker</h4>
       <div>
-        <mat-form-field class="formField">
-          <input matInput placeholder="type" [(ngModel)]="api.type">
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Type</mat-label>
+          <mat-select (selectionChange)="updateApiValue(mep, api, 'type')"
+                      (focusin)="saveFocusinValue(api.maintainer)"
+                      [(ngModel)]="api.type">
+            <mat-option *ngFor="let type of apiTypes" [value]="type">
+              {{type}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="formField">
-          <input matInput placeholder="dockerImage" [(ngModel)]="api.dockerImage">
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Image docker</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'dockerImage')"
+                 (focusin)="saveFocusinValue(api.maintainer)"
+                 [(ngModel)]="api.dockerImage"
+                 matInput placeholder="image docker">
         </mat-form-field>
       </div>
 
       <h4>Version</h4>
       <div>
-        <mat-form-field class="formField">
-          <input matInput placeholder="newVersion" [(ngModel)]="api.newVersion">
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Nouvelle Version</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'newVersion')"
+                 (focusin)="saveFocusinValue(api.maintainer)"
+                 [(ngModel)]="api.newVersion"
+                 matInput placeholder="nouvelle Version">
         </mat-form-field>
 
-        <mat-form-field class="formField">
-          <input matInput placeholder="oldVersion" [(ngModel)]="api.oldVersion">
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Ancienne Version</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'oldVersion')"
+                 (focusin)="saveFocusinValue(api.maintainer)"
+                 [(ngModel)]="api.oldVersion"
+                 matInput placeholder="ancienne version">
         </mat-form-field>
       </div>
-
       <h4>A faire</h4>
       <div class="step-sets">
         <div class="stepset" *ngFor="let stepset of api.stepsets">
@@ -76,7 +164,7 @@
               </button>
               <mat-menu #menu="matMenu">
                 <button *ngFor="let status of statuses" mat-menu-item
-                        (click)="setStepStatus(step, status)">{{status}}</button>
+                        (click)="setStepStatus(mep, api, stepset, step, status)">{{status}}</button>
               </mat-menu>
             </div>
           </div>
