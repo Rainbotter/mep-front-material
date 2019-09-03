@@ -1,3 +1,4 @@
+<h3>Mep</h3>
 <mat-form-field class="formField" appearance="outline">
   <mat-label>Projet</mat-label>
   <input autocomplete="off"
@@ -23,24 +24,35 @@
          [matDatepicker]="dueDatePick"
          [(ngModel)]="mep.dueDate">
   <mat-datepicker-toggle matSuffix [for]="dueDatePick"></mat-datepicker-toggle>
-  <mat-datepicker (closed)="mep.dueDate.setHours(12); updateMepValue(mep, 'dueDate')" disabled="false" #dueDatePick></mat-datepicker>
+  <mat-datepicker (closed)="mep.dueDate.setHours(12); updateMepValue(mep, 'dueDate')" disabled="false"
+                  #dueDatePick></mat-datepicker>
 </mat-form-field>
 
 <mat-form-field class="formField" appearance="outline">
   <mat-label>Dernière modification</mat-label>
-  <input disabled autocomplete="off" matInput [(ngModel)]="mep.lastModificationDate">
-  <mat-datepicker-toggle matSuffix [for]="dueDatePick"></mat-datepicker-toggle>
-  <mat-datepicker disabled="true" #dueDatePick></mat-datepicker>
+  <input disabled autocomplete="off" matInput
+         [matDatepicker]="lastModifDatePick"
+         [(ngModel)]="mep.lastModificationDate">
+  <mat-datepicker-toggle matSuffix [for]="lastModifDatePick"></mat-datepicker-toggle>
+  <mat-datepicker disabled #lastModifDatePick></mat-datepicker>
 </mat-form-field>
 
 <mat-form-field class="formField" appearance="outline">
   <mat-label>Date de clotûre</mat-label>
-  <input disabled autocomplete="off" matInput>
+  <input disabled autocomplete="off" matInput
+         [matDatepicker]="closureDatePick"
+         [(ngModel)]="mep.closureDate">
+  <mat-datepicker-toggle matSuffix [for]="closureDatePick"></mat-datepicker-toggle>
+  <mat-datepicker disabled #closureDatePick></mat-datepicker>
 </mat-form-field>
 
 <button *ngIf="!mep.closureDate" (click)="closeMep(mep)" mat-flat-button color="primary">Clotûrer la mep</button>
 <button *ngIf="mep.closureDate" (click)="reOpenMep(mep)" mat-flat-button color="primary">re-ouvrir la mep</button>
 
+<h3>Apis</h3>
+<p>
+  <button mat-flat-button (click)="addApi()" color="primary">Ajouter une API</button>
+</p>
 <mat-accordion [multi]="true">
   <mat-expansion-panel *ngFor="let api of mep?.apis"
                        class="mat-elevation-z0">
@@ -48,7 +60,12 @@
                                 [class.api-table-header-started]="isStarted(api)"
                                 [class.api-table-header-completed]="isCompleted(api)">
       <mat-panel-title>
-        {{api.name}}
+        <div>
+          <button (click)="removeApi(api)" mat-button aria-label="Remove the api">
+            <mat-icon>delete</mat-icon>
+          </button>
+          {{api.name}}
+        </div>
       </mat-panel-title>
       <mat-panel-description>
       </mat-panel-description>

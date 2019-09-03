@@ -21,6 +21,14 @@ export class UrlService {
     return this.getMepUrl(mepId) + '/' + fieldName;
   }
 
+  public getMepCloseUrl(mepId: string): string {
+    return this.getMepUrl(mepId) + '/close';
+  }
+
+  public getMepOpenUrl(mepId: string): string {
+    return this.getMepUrl(mepId) + '/open';
+  }
+
   public getApisUrl(mepId: string): string {
     return this.getMepUrl(mepId) + environment.paths.apis;
   }

@@ -10,6 +10,8 @@ import { Step } from '../../interfaces/responses/mep/step';
 import { ApiService } from '../../services/api.service';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { StepSet } from '../../interfaces/responses/mep/step-set';
+import { ApiCreationModalComponent } from '../../components/api-creation-modal/api-creation-modal.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'mep-mep',
@@ -36,22 +38,13 @@ export class MepComponent implements OnInit, OnDestroy {
               private mepService: MepService,
               private apiService: ApiService,
               private router: Router,
-              private app: ApplicationService) {
+              private app: ApplicationService,
+              public dialog: MatDialog,) {
     this.mep = {};
     this.subscriptions = [];
     this.app.startLoading();
     this.statuses = [Status.OK, Status.PENDING, Status.NOK, Status.NA];
-    this.subscriptions.push(this.route.queryParams.subscribe(params => {
-      if (params['id']) {
-        this.mepService.getMep(params['id']).then(value => {
-          this.app.stopLoading();
-          this.mep = value;
-        }).catch(err => {
-          this.app.stopLoading();
-          this.router.navigate(['/']);
-        });
-      }
-    }));
+    this.updateMep();
   }
 
   ngOnInit() {
@@ -95,11 +88,23 @@ export class MepComponent implements OnInit, OnDestroy {
   }
 
   public closeMep(mep: Mep): void {
+    this.mepService.closeMep(mep.id)
+      .then(res => {
+        this.mep = res;
+      })
+      .catch(err => {
 
+      });
   }
 
   public reOpenMep(mep: Mep): void {
+    this.mepService.openMep(mep.id)
+      .then(res => {
+        this.mep = res;
+      })
+      .catch(err => {
 
+      });
   }
 
   public updateApiValue(mep: Mep, api: Api, fieldName: string) {
@@ -119,6 +124,38 @@ export class MepComponent implements OnInit, OnDestroy {
       .map(steps => steps.forEach(step => result.push(step)));
 
     return result;
+  }
+
+  public addApi(): void {
+
+    const dialogRef = this.dialog.open(ApiCreationModalComponent, {
+      data: {mep: this.mep},
+      autoFocus: false
+    });
+
+    this.subscriptions.push(
+      dialogRef.afterClosed().subscribe(res => {
+        this.updateMep();
+      })
+    );
+  }
+
+  public updateMep(): void {
+    this.subscriptions.push(this.route.queryParams.subscribe(params => {
+      if (params['id']) {
+        this.mepService.getMep(params['id']).then(value => {
+          this.app.stopLoading();
+          this.mep = value;
+        }).catch(err => {
+          this.app.stopLoading();
+          this.router.navigate(['/']);
+        });
+      }
+    }));
+  }
+
+  public removeApi(apiToRemove: Api): void {
+    this.mep.apis = this.mep.apis.filter(api => api.id !== apiToRemove.id);
   }
 
 }

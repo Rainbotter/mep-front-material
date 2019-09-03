@@ -3,7 +3,10 @@ import { MepService } from '../../services/mep.service';
 import { Mep } from '../../interfaces/responses/mep/mep';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { PageEvent } from '@angular/material';
+import { MatDialog, PageEvent } from '@angular/material';
+import { MepCreationModalComponent } from '../../components/mep-creation-modal/mep-creation-modal.component';
+import { Template } from '../../interfaces/responses/template/template';
+import { TemplateService } from '../../services/template.service';
 
 @Component({
   selector: 'mep-meps',
@@ -15,6 +18,7 @@ export class MepsComponent implements OnInit, OnDestroy {
   private allMeps: Mep[];
 
   public meps: Mep[];
+  public templates: Template[];
   public projects: string[];
   public statuses: string[];
 
@@ -28,17 +32,13 @@ export class MepsComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private mepService: MepService) {
-    this.mepService.getMeps()
-      .then(res => {
-        this.allMeps = res;
-        this.meps = this.allMeps.slice(0, this.pageSize);
-        this.length = this.allMeps.length;
+  constructor(private mepService: MepService,
+              public dialog: MatDialog,
+              private templateService: TemplateService) {
+    this.updateMeps();
 
-        this.projects = Array.from(new Set(this.allMeps.map(mep => mep.project)));
-        this.statuses = ['En cours', 'Fermée'];
-
-      })
+    this.templateService.getTemplates()
+      .then(res => this.templates = res)
       .catch(err => console.log(err));
 
     this.subscriptions.push(this.projectControl.valueChanges.subscribe(value => {
@@ -86,4 +86,32 @@ export class MepsComponent implements OnInit, OnDestroy {
     this.updateMepsToDisplay();
     this.meps = this.meps.slice(pageEvent.pageIndex * pageEvent.pageSize, (pageEvent.pageIndex * pageEvent.pageSize) + pageEvent.pageSize);
   }
+
+  public createMep(): void {
+    const dialogRef = this.dialog.open(MepCreationModalComponent, {
+      data: {meps: this.meps, templates: this.templates},
+      autoFocus: false
+    });
+
+    this.subscriptions.push(
+      dialogRef.afterClosed().subscribe(res => {
+        this.updateMeps();
+      })
+    );
+  }
+
+  private updateMeps(): void {
+    this.mepService.getMeps()
+      .then(res => {
+        this.allMeps = res;
+        this.meps = this.allMeps.slice(0, this.pageSize);
+        this.length = this.allMeps.length;
+
+        this.projects = Array.from(new Set(this.allMeps.map(mep => mep.project)));
+        this.statuses = ['En cours', 'Fermée'];
+        this.updateMepsToDisplay();
+      })
+      .catch(err => console.log(err));
+  }
+
 }

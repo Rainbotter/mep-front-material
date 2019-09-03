@@ -16,8 +16,8 @@ export class ApiService {
     return ['DOCKER', 'RANCHER'];
   }
 
-  public createApi(mepId: string, name: string, maintainer: string, type: string, oldVersion: string, newVersion: string): Promise<Api> {
-    const requestObject = {name, maintainer, type, oldVersion, newVersion};
+  public createApi(mepId: string, name: string, type: string): Promise<Api> {
+    const requestObject = {name, type};
     return this.http.post<Api>(this.urlService.getApisUrl(mepId), requestObject).toPromise();
   }
 

@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Créer une nouvelle Mep</h1>
+<div mat-dialog-content>
+  <form [formGroup]="apiGroup">
+
+    <mat-form-field class="formField" appearance="outline">
+      <mat-label>Nom</mat-label>
+      <input [formControl]="nameControl"
+             autocomplete="off"
+             matInput>
+      <mat-error *ngIf="nameControl.hasError('required')">
+        Ce champs doit être rempli
+      </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field class="formField" appearance="outline">
+      <mat-label>Template</mat-label>
+      <mat-select [formControl]="typeControl">
+        <mat-option *ngFor="let type of types" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="typeControl.hasError('required')">
+        Ce champs doit être rempli
+      </mat-error>
+    </mat-form-field>
+
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button color="primary" (click)="close()">Annuler</button>
+  <button mat-raised-button color="primary" (click)="addApi()">Ajouter l'API</button>
+</div>

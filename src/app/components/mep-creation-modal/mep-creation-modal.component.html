@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>Créer une nouvelle Mep</h1>
+<div mat-dialog-content>
+  <form [formGroup]="mepGroup">
+    <mat-form-field class="formField" appearance="outline">
+      <mat-label>Projet</mat-label>
+      <input [formControl]="projectControl"
+             [matAutocomplete]="projectChoice"
+             matInput>
+      <mat-autocomplete #projectChoice="matAutocomplete">
+        <mat-option *ngFor="let project of projects" [value]="project">
+          {{project}}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="projectControl.hasError('required')">
+        Ce champs doit être rempli
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="formField" appearance="outline">
+      <mat-label>Nom</mat-label>
+      <input [formControl]="nameControl"
+             autocomplete="off"
+             matInput>
+      <mat-error *ngIf="nameControl.hasError('required')">
+        Ce champs doit être rempli
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="formField" appearance="outline">
+      <mat-label>Template</mat-label>
+      <mat-select [formControl]="templateControl">
+        <mat-option *ngFor="let template of data.templates" [value]="template">
+          {{template.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="templateControl.hasError('required')">
+        Ce champs doit être rempli
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button color="primary" (click)="close()">Annuler</button>
+  <button mat-raised-button color="primary" (click)="createMep()">Créer la mep</button>
+</div>

@@ -4,9 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomeComponent } from './pages/home/home.component';
-import { TemplateFormComponent } from './pages/template-form/template-form.component';
-import { MepFormComponent } from './pages/mep-form/mep-form.component';
 import { MepComponent } from './pages/mep/mep.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -15,7 +12,7 @@ import {
   MatAutocompleteModule,
   MatButtonModule,
   MatCardModule,
-  MatDatepickerModule,
+  MatDatepickerModule, MatDialogModule,
   MatExpansionModule,
   MatGridListModule,
   MatIconModule,
@@ -39,19 +36,20 @@ import { TemplateComponent } from './pages/template/template.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MepCreationModalComponent } from './components/mep-creation-modal/mep-creation-modal.component';
+import { ApiCreationModalComponent } from './components/api-creation-modal/api-creation-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    TemplateFormComponent,
-    MepFormComponent,
     MepComponent,
     HeaderComponent,
     FooterComponent,
     MepsComponent,
     TemplatesComponent,
-    TemplateComponent
+    TemplateComponent,
+    MepCreationModalComponent,
+    ApiCreationModalComponent
   ],
   imports: [
     CommonModule,
@@ -80,12 +78,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatPaginatorModule,
     FontAwesomeModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatDialogModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
     ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [MepCreationModalComponent, ApiCreationModalComponent]
 })
 export class AppModule {
 }
