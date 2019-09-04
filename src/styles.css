@@ -39,3 +39,7 @@ body {
   opacity: 0.4;
   pointer-events: none;
 }
+
+.mat-dialog-actions {
+  justify-content: space-between;
+}

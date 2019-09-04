@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MepComponent } from './pages/mep/mep.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { faClock } from '@fortawesome/free-solid-svg-icons';
 import {
   MAT_DATE_LOCALE,
   MatAutocompleteModule,
@@ -38,6 +39,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MepCreationModalComponent } from './components/mep-creation-modal/mep-creation-modal.component';
 import { ApiCreationModalComponent } from './components/api-creation-modal/api-creation-modal.component';
+import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { ApiCreationModalComponent } from './components/api-creation-modal/api-c
     TemplatesComponent,
     TemplateComponent,
     MepCreationModalComponent,
-    ApiCreationModalComponent
+    ApiCreationModalComponent,
+    ConfirmationModalComponent
   ],
   imports: [
     CommonModule,
@@ -85,7 +88,7 @@ import { ApiCreationModalComponent } from './components/api-creation-modal/api-c
     {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
     ],
   bootstrap: [AppComponent],
-  entryComponents: [MepCreationModalComponent, ApiCreationModalComponent]
+  entryComponents: [MepCreationModalComponent, ApiCreationModalComponent, ConfirmationModalComponent]
 })
 export class AppModule {
 }

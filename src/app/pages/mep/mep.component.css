@@ -2,6 +2,10 @@ table {
   width: 100%;
 }
 
+.api-description {
+  align-items: center;
+}
+
 .api-table-header-created,
 .api-table-header-created:focus {
   background: #FFDDDD !important;
@@ -48,18 +52,18 @@ table {
   margin-bottom: 0.25rem;
 }
 
-.api-content{
+.api-content {
   display: inline-block;
 }
 
 .api-form {
   margin-top: 1rem;
-  margin-right: 1rem!important;
+  margin-right: 1rem !important;
 }
 
 .step-form {
   margin-top: 1rem;
-  margin-right: 1rem!important;
+  margin-right: 1rem !important;
 }
 
 .step-sets,

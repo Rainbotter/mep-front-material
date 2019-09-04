@@ -12,6 +12,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { StepSet } from '../../interfaces/responses/mep/step-set';
 import { ApiCreationModalComponent } from '../../components/api-creation-modal/api-creation-modal.component';
 import { MatDialog } from '@angular/material';
+import { ConfirmationModalComponent } from '../../components/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'mep-mep',
@@ -155,7 +156,23 @@ export class MepComponent implements OnInit, OnDestroy {
   }
 
   public removeApi(apiToRemove: Api): void {
-    this.mep.apis = this.mep.apis.filter(api => api.id !== apiToRemove.id);
+
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      autoFocus: false
+    });
+
+    this.subscriptions.push(dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.mepService.removeApi(this.mep.id, apiToRemove.id)
+          .then(res => {
+            this.mep = res;
+          })
+          .catch(err => {
+
+          });
+      }
+    }));
+
   }
 
 }

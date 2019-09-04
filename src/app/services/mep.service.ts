@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Mep } from '../interfaces/responses/mep/mep';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
 import { map } from 'rxjs/operators';
 import { UrlService } from './url.service';
 
@@ -53,6 +52,10 @@ export class MepService {
         return mep;
       }))
       .toPromise();
+  }
+
+  public removeApi(mepId: string, apiId: string): Promise<Mep> {
+    return this.http.delete<Mep>(this.urlService.getApiUrl(mepId, apiId), {}).toPromise();
   }
 
   public openMep(mepId: string): Promise<any> {

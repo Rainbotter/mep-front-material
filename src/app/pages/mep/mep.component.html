@@ -61,13 +61,16 @@
                                 [class.api-table-header-completed]="isCompleted(api)">
       <mat-panel-title>
         <div>
-          <button (click)="removeApi(api)" mat-button aria-label="Remove the api">
+          <button (click)="removeApi(api); $event.stopPropagation()" mat-button aria-label="Remove the api">
             <mat-icon>delete</mat-icon>
           </button>
           {{api.name}}
         </div>
       </mat-panel-title>
-      <mat-panel-description>
+      <mat-panel-description class="api-description">
+        <div>
+        {{api.type}}
+        </div>
       </mat-panel-description>
     </mat-expansion-panel-header>
     <div class="api-content">
@@ -119,19 +122,8 @@
         </mat-form-field>
       </div>
 
-      <h4>Docker</h4>
+      <h4>{{api.type}}</h4>
       <div>
-        <mat-form-field class="formField" appearance="outline">
-          <mat-label>Type</mat-label>
-          <mat-select (selectionChange)="updateApiValue(mep, api, 'type')"
-                      (focusin)="saveFocusinValue(api.maintainer)"
-                      [(ngModel)]="api.type">
-            <mat-option *ngFor="let type of apiTypes" [value]="type">
-              {{type}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
         <mat-form-field class="formField" appearance="outline">
           <mat-label>Image docker</mat-label>
           <input autocomplete="off"
@@ -139,6 +131,110 @@
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.dockerImage"
                  matInput placeholder="image docker">
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="api.type === 'DOCKER'">
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Port</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'appPort')"
+                 (focusin)="saveFocusinValue(api.appPort)"
+                 [(ngModel)]="api.appPort"
+                 matInput>
+        </mat-form-field>
+
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Node</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'dockerNode')"
+                 (focusin)="saveFocusinValue(api.dockerNode)"
+                 [(ngModel)]="api.dockerNode"
+                 matInput>
+        </mat-form-field>
+
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Run args</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'dockerRunArgs')"
+                 (focusin)="saveFocusinValue(api.dockerRunArgs)"
+                 [(ngModel)]="api.dockerRunArgs"
+                 matInput>
+        </mat-form-field>
+
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Version de la Toolbox</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'dockerToolboxVersion')"
+                 (focusin)="saveFocusinValue(api.dockerToolboxVersion)"
+                 [(ngModel)]="api.dockerToolboxVersion"
+                 matInput>
+        </mat-form-field>
+
+      </div>
+      <div *ngIf="api.type === 'RANCHER'">
+
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Namespace</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'namespace')"
+                 (focusin)="saveFocusinValue(api.namespace)"
+                 [(ngModel)]="api.namespace"
+                 matInput>
+        </mat-form-field>
+
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Branche</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'branchName')"
+                 (focusin)="saveFocusinValue(api.branchName)"
+                 [(ngModel)]="api.branchName"
+                 matInput>
+        </mat-form-field>
+
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Tfs team</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'tfsTeam')"
+                 (focusin)="saveFocusinValue(api.tfsTeam)"
+                 [(ngModel)]="api.tfsTeam"
+                 matInput>
+        </mat-form-field>
+
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Cluster</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'cluster')"
+                 (focusin)="saveFocusinValue(api.cluster)"
+                 [(ngModel)]="api.cluster"
+                 matInput>
+        </mat-form-field>
+
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Projet Rancher</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'rancherProject')"
+                 (focusin)="saveFocusinValue(api.rancherProject)"
+                 [(ngModel)]="api.rancherProject"
+                 matInput>
+        </mat-form-field>
+
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Environnement Rancher</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'rancherEnv')"
+                 (focusin)="saveFocusinValue(api.rancherEnv)"
+                 [(ngModel)]="api.rancherEnv"
+                 matInput>
+        </mat-form-field>
+
+        <mat-form-field class="formField" appearance="outline">
+          <mat-label>Template Rancher</mat-label>
+          <input autocomplete="off"
+                 (focusout)="updateApiValue(mep, api, 'rancherTemplate')"
+                 (focusin)="saveFocusinValue(api.rancherTemplate)"
+                 [(ngModel)]="api.rancherTemplate"
+                 matInput>
         </mat-form-field>
       </div>
 
