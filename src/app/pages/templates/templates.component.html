@@ -1,1 +1,31 @@
-<p>templates works!</p>
+<p>
+  <button mat-flat-button (click)="createTemplate()" color="primary">Créer un template</button>
+</p>
+
+<table mat-table matSort [dataSource]="templates">
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Nom</th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="uses">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Nombre d'utilisations</th>
+    <td mat-cell *matCellDef="let element"> {{numberOfUse(element)}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="action">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element" class="action-column">
+      <button mat-stroked-button
+              [routerLink]="['/template']"
+              [queryParams]="{id: element.id}"
+              color="primary">
+        Visualiser
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

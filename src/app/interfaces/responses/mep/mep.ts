@@ -10,6 +10,7 @@ export interface Mep {
   closureDate?: Date;
   creationDate?: Date;
   lastModificationDate?: Date;
+  templateId: string;
   apis?: Api[];
 
 }

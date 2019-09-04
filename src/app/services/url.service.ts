@@ -9,6 +9,14 @@ export class UrlService {
   constructor() {
   }
 
+  public getTemplatesUrl(): string {
+    return `${environment.apiUrl}${environment.paths.templates}`;
+  }
+
+  public getTemplateUrl(templateId: string): string {
+    return this.getTemplatesUrl() + '/' + templateId;
+  }
+
   public getMepsUrl(): string {
     return `${environment.apiUrl}${environment.paths.meps}`;
   }

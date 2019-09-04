@@ -33,8 +33,8 @@ export class MepsComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(private mepService: MepService,
-              public dialog: MatDialog,
-              private templateService: TemplateService) {
+              private templateService: TemplateService,
+              public dialog: MatDialog) {
     this.updateMeps();
 
     this.templateService.getTemplates()

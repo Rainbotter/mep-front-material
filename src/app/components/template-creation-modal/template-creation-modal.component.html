@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Créer une nouveau template</h1>
+<div mat-dialog-content>
+  <form [formGroup]="templateGroup">
+
+    <mat-form-field class="formField" appearance="outline">
+      <mat-label>Nom</mat-label>
+      <input [formControl]="nameControl"
+             autocomplete="off"
+             matInput>
+      <mat-error *ngIf="nameControl.hasError('required')">
+        Ce champs doit être rempli
+      </mat-error>
+    </mat-form-field>
+
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button color="primary" (click)="close()">Annuler</button>
+  <button mat-raised-button color="primary" (click)="createTemplate()">Créer le template</button>
+</div>
