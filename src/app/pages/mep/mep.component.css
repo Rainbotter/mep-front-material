@@ -2,10 +2,6 @@ table {
   width: 100%;
 }
 
-.api-description {
-  align-items: center;
-}
-
 .api-table-header-created,
 .api-table-header-created:focus {
   background: #FFDDDD !important;
