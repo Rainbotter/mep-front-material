@@ -1,1 +1,15 @@
-<p>template works!</p>
+<h4>Étapes</h4>
+<div class="step-sets">
+  <div class="stepset" *ngFor="let stepset of template?.stepsets">
+    <div class="stepset-header">
+      {{stepset.name}}
+    </div>
+    <div class="steps" *ngFor="let step of stepset.steps">
+      <div>
+        <button mat-stroked-button class="step-button">
+          {{step.name}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

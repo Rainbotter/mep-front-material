@@ -1,0 +1,8 @@
+.step-sets,
+.steps {
+  display: inline-flex;
+}
+
+.step-set {
+  margin-bottom: 0.5rem;
+}

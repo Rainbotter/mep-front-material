@@ -21,4 +21,8 @@ export class TemplateService {
     return this.http.post<Template>(this.urlService.getTemplatesUrl(), requestObject).toPromise();
   }
 
+  public getTemplate(templateId: string): Promise<Template> {
+    return this.http.get<Template>(this.urlService.getTemplateUrl(templateId)).toPromise();
+  }
+
 }

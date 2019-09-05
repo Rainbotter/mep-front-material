@@ -26,21 +26,15 @@ export class MepComponent implements OnInit, OnDestroy {
   public statuses: string[];
   private subscriptions: Subscription[];
   public apiTypes = ['DOCKER', 'RANCHER'];
-  public displayedColumns: string[] = [
-    'name', 'maintainer', 'change',
-    'comment', 'dbUpdate', 'dockerImage',
-    'exposition', 'newVersion', 'oldVersion',
-    'type', 'steps'];
 
   private focusInValue: string;
-  private focusInDateValue: Date;
 
   constructor(private route: ActivatedRoute,
               private mepService: MepService,
               private apiService: ApiService,
               private router: Router,
               private app: ApplicationService,
-              public dialog: MatDialog,) {
+              public dialog: MatDialog) {
     this.mep = {};
     this.subscriptions = [];
     this.app.startLoading();
