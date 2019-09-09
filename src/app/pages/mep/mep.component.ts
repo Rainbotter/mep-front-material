@@ -25,7 +25,6 @@ export class MepComponent implements OnInit, OnDestroy {
   public mep: Mep;
   public statuses: string[];
   private subscriptions: Subscription[];
-  public apiTypes = ['DOCKER', 'RANCHER'];
 
   private focusInValue: string;
 
