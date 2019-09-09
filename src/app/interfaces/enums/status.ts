@@ -5,4 +5,8 @@ export class Status {
   static PENDING = 'PENDING';
   static NA = 'NA';
 
+  static getAllStatus(): string[] {
+    return Object.keys(Status).map(value => Status[value]);
+  }
+
 }

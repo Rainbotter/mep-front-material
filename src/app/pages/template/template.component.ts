@@ -7,6 +7,11 @@ import { Status } from '../../interfaces/enums/status';
 import { MatDialog } from '@angular/material';
 import { StepsetCreationModalComponent } from '../../components/modals/stepset-creation-modal/stepset-creation-modal.component';
 import { StepCreationModalComponent } from '../../components/modals/step-creation-modal/step-creation-modal.component';
+import { StepSetTemplate } from '../../interfaces/responses/template/step-set-template';
+import { StepTemplate } from '../../interfaces/responses/template/step-template';
+import { ConfirmationModalComponent } from '../../components/modals/confirmation-modal/confirmation-modal.component';
+import { RenameStepsetModalComponent } from '../../components/modals/rename-stepset-modal/rename-stepset-modal.component';
+import { RenameStepModalComponent } from '../../components/modals/rename-step-modal/rename-step-modal.component';
 
 @Component({
   selector: 'mep-template',
@@ -16,9 +21,7 @@ import { StepCreationModalComponent } from '../../components/modals/step-creatio
 export class TemplateComponent implements OnInit, OnDestroy {
 
   public template: Template;
-
   private subscriptions: Subscription[];
-
   public statuses: string[];
 
   constructor(private route: ActivatedRoute,
@@ -26,12 +29,9 @@ export class TemplateComponent implements OnInit, OnDestroy {
               private templateService: TemplateService,
               public dialog: MatDialog) {
     this.subscriptions = [];
-    this.statuses = [Status.OK, Status.PENDING, Status.NOK, Status.NA];
-    this.subscriptions.push(this.route.queryParams.subscribe(params => {
-      this.templateService.getTemplate(params['id'])
-        .then(res => this.template = res)
-        .catch(err => console.log(err));
-    }));
+    this.statuses = Status.getAllStatus();
+
+    this.updateTemplate();
   }
 
   ngOnInit() {
@@ -45,25 +45,103 @@ export class TemplateComponent implements OnInit, OnDestroy {
 
   public addStepset(): void {
     const dialogRef = this.dialog.open(StepsetCreationModalComponent, {
+      data: {template: this.template},
       autoFocus: false
     });
 
     this.subscriptions.push(
       dialogRef.afterClosed().subscribe(res => {
+        this.updateTemplate();
       })
     );
   }
 
-  public addStep(setStepId: string): void {
+  public addStep(stepSet: StepSetTemplate): void {
 
     const dialogRef = this.dialog.open(StepCreationModalComponent, {
+      data: {template: this.template, stepSet},
       autoFocus: false
     });
 
     this.subscriptions.push(
       dialogRef.afterClosed().subscribe(res => {
+        this.updateTemplate();
       })
     );
+  }
+
+  public deleteStepSet(stepSet: StepSetTemplate): void {
+
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      autoFocus: false
+    });
+
+    this.subscriptions.push(dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.templateService.deleteStepSet(this.template.id, stepSet.id)
+          .then(res => {
+            this.template = res;
+          })
+          .catch(err => {
+
+          });
+      }
+    }));
+  }
+
+  public deleteStep(stepSet: StepSetTemplate, step: StepTemplate): void {
+
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      autoFocus: false
+    });
+
+    this.subscriptions.push(dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.templateService.deleteStep(this.template.id, stepSet.id, step.id)
+          .then(res => {
+            this.template = res;
+          })
+          .catch(err => {
+
+          });
+      }
+    }));
+  }
+
+  public renameStepSet(stepSet: StepSetTemplate): void {
+
+    const dialogRef = this.dialog.open(RenameStepsetModalComponent, {
+      data: {template: this.template, stepSet},
+      autoFocus: false
+    });
+
+    this.subscriptions.push(
+      dialogRef.afterClosed().subscribe(res => {
+        this.updateTemplate();
+      })
+    );
+  }
+
+  public renameStep(stepSet: StepSetTemplate, step: StepTemplate): void {
+
+    const dialogRef = this.dialog.open(RenameStepModalComponent, {
+      data: {template: this.template, stepSet, step},
+      autoFocus: false
+    });
+
+    this.subscriptions.push(
+      dialogRef.afterClosed().subscribe(res => {
+        this.updateTemplate();
+      })
+    );
+  }
+
+  private updateTemplate(): void {
+    this.subscriptions.push(this.route.queryParams.subscribe(params => {
+      this.templateService.getTemplate(params['id'])
+        .then(res => this.template = res)
+        .catch(err => console.log(err));
+    }));
   }
 
 }

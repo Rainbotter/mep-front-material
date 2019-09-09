@@ -1,26 +1,26 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Template } from '../../../interfaces/responses/template/template';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { TemplateService } from '../../../services/template.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { StepCreationModalData } from '../../../interfaces/modals/StepCreationModalData';
+import { RenameStepModalData } from '../../../interfaces/modals/RenameStepModalData';
 
 @Component({
-  selector: 'mep-step-creation-modal',
-  templateUrl: './step-creation-modal.component.html',
-  styleUrls: ['./step-creation-modal.component.css']
+  selector: 'mep-rename-step-modal',
+  templateUrl: './rename-step-modal.component.html',
+  styleUrls: ['./rename-step-modal.component.css']
 })
-export class StepCreationModalComponent implements OnInit {
+export class RenameStepModalComponent implements OnInit {
 
   public stepControl: FormGroup;
 
   public nameControl: FormControl;
 
-  constructor(public dialogRef: MatDialogRef<StepCreationModalComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: StepCreationModalData,
+  constructor(public dialogRef: MatDialogRef<RenameStepModalComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: RenameStepModalData,
               private templateService: TemplateService,
               private _formBuilder: FormBuilder) {
-    this.nameControl = this._formBuilder.control('', Validators.required);
+    this.nameControl = this._formBuilder.control(data.step.name, Validators.required);
 
     this.stepControl = this._formBuilder.group({
       nameControl: this.nameControl
@@ -30,9 +30,9 @@ export class StepCreationModalComponent implements OnInit {
   ngOnInit() {
   }
 
-  public CreateStep(): void {
+  public renameStep(): void {
     if (this.stepControl.valid) {
-      this.templateService.createStep(this.data.template.id, this.data.stepSet.id, this.nameControl.value, this.data.stepSet.steps.length + 1)
+      this.templateService.renameStep(this.data.template.id, this.data.stepSet.id, this.data.step.id, this.nameControl.value)
         .then(res => {
           this.close(res);
         })

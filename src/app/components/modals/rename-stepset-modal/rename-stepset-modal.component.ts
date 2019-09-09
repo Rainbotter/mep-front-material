@@ -1,26 +1,26 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { TemplateService } from '../../../services/template.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { RenameStepSetModalData } from '../../../interfaces/modals/RenameStepSetModalData';
 import { Template } from '../../../interfaces/responses/template/template';
-import { StepSetCreationModalData } from '../../../interfaces/modals/StepSetCreationModalData';
 
 @Component({
-  selector: 'mep-stepset-creation-modal',
-  templateUrl: './stepset-creation-modal.component.html',
-  styleUrls: ['./stepset-creation-modal.component.css']
+  selector: 'mep-rename-stepset-modal',
+  templateUrl: './rename-stepset-modal.component.html',
+  styleUrls: ['./rename-stepset-modal.component.css']
 })
-export class StepsetCreationModalComponent implements OnInit {
+export class RenameStepsetModalComponent implements OnInit {
 
   public stepSetControl: FormGroup;
 
   public nameControl: FormControl;
 
-  constructor(public dialogRef: MatDialogRef<StepsetCreationModalComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: StepSetCreationModalData,
+  constructor(public dialogRef: MatDialogRef<RenameStepsetModalComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: RenameStepSetModalData,
               private templateService: TemplateService,
               private _formBuilder: FormBuilder) {
-    this.nameControl = this._formBuilder.control('', Validators.required);
+    this.nameControl = this._formBuilder.control(data.stepSet.name, Validators.required);
 
     this.stepSetControl = this._formBuilder.group({
       nameControl: this.nameControl
@@ -30,9 +30,9 @@ export class StepsetCreationModalComponent implements OnInit {
   ngOnInit() {
   }
 
-  public createStepSet(): void {
+  public renameStepSet(): void {
     if (this.stepSetControl.valid) {
-      this.templateService.createStepSet(this.data.template.id, this.nameControl.value, this.data.template.stepsets.length + 1)
+      this.templateService.renameStepSet(this.data.template.id, this.data.stepSet.id, this.nameControl.value)
         .then(res => {
           this.close(res);
         })

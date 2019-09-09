@@ -1,6 +1,6 @@
-<h1 mat-dialog-title>Créer un ensemble</h1>
+<h1 mat-dialog-title>Renommer un ensemble</h1>
 <div mat-dialog-content>
-  <form [formGroup]="stepSetControl">
+  <form [formGroup]="stepControl">
 
     <mat-form-field class="formField" appearance="outline">
       <mat-label>Nom</mat-label>
@@ -16,5 +16,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-stroked-button color="primary" (click)="close()">Annuler</button>
-  <button mat-raised-button color="primary" (click)="createStepSet()">Valider</button>
+  <button mat-raised-button color="primary" (click)="renameStep()">Valider</button>
 </div>

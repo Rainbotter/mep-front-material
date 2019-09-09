@@ -37,7 +37,7 @@ export class MepComponent implements OnInit, OnDestroy {
     this.mep = {};
     this.subscriptions = [];
     this.app.startLoading();
-    this.statuses = [Status.OK, Status.PENDING, Status.NOK, Status.NA];
+    this.statuses = Status.getAllStatus();
     this.updateMep();
   }
 

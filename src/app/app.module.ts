@@ -43,6 +43,8 @@ import { ConfirmationModalComponent } from './components/modals/confirmation-mod
 import { TemplateCreationModalComponent } from './components/modals/template-creation-modal/template-creation-modal.component';
 import { StepsetCreationModalComponent } from './components/modals/stepset-creation-modal/stepset-creation-modal.component';
 import { StepCreationModalComponent } from './components/modals/step-creation-modal/step-creation-modal.component';
+import { RenameStepsetModalComponent } from './components/modals/rename-stepset-modal/rename-stepset-modal.component';
+import { RenameStepModalComponent } from './components/modals/rename-step-modal/rename-step-modal.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import { StepCreationModalComponent } from './components/modals/step-creation-mo
     ConfirmationModalComponent,
     TemplateCreationModalComponent,
     StepsetCreationModalComponent,
-    StepCreationModalComponent
+    StepCreationModalComponent,
+    RenameStepsetModalComponent,
+    RenameStepModalComponent
   ],
   imports: [
     CommonModule,
@@ -100,7 +104,9 @@ import { StepCreationModalComponent } from './components/modals/step-creation-mo
     ConfirmationModalComponent,
     TemplateCreationModalComponent,
     StepsetCreationModalComponent,
-    StepCreationModalComponent
+    StepCreationModalComponent,
+    RenameStepsetModalComponent,
+    RenameStepModalComponent
   ]
 })
 export class AppModule {

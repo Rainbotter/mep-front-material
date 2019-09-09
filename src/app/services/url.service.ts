@@ -17,12 +17,28 @@ export class UrlService {
     return this.getTemplatesUrl() + '/' + templateId;
   }
 
+  public getTemplateStepSetsUrl(templateId: string): string {
+    return this.getTemplateUrl(templateId) + '/stepsets';
+  }
+
   public getTemplateStepSetUrl(templateId: string, stepSetId: string): string {
-    return this.getTemplateUrl(templateId) + '/' + stepSetId;
+    return this.getTemplateStepSetsUrl(templateId) + '/' + stepSetId;
+  }
+
+  public getTemplateStepSetRenameUrl(templateId: string, stepSetId: string): string {
+    return this.getTemplateStepSetUrl(templateId, stepSetId) + '/name';
+  }
+
+  public getTemplateStepsUrl(templateId: string, stepSetId: string): string {
+    return this.getTemplateStepSetUrl(templateId, stepSetId) + '/steps';
   }
 
   public getTemplateStepUrl(templateId: string, stepSetId: string, stepId: string): string {
-    return this.getTemplateStepSetUrl(templateId, stepSetId) + '/' + stepId;
+    return this.getTemplateStepsUrl(templateId, stepSetId) + '/' + stepId;
+  }
+
+  public getTemplateStepRenameUrl(templateId: string, stepSetId: string, stepId: string): string {
+    return this.getTemplateStepUrl(templateId, stepSetId, stepId) + '/name';
   }
 
   public getMepsUrl(): string {
