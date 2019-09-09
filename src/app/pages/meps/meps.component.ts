@@ -4,7 +4,7 @@ import { Mep } from '../../interfaces/responses/mep/mep';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MatDialog, PageEvent } from '@angular/material';
-import { MepCreationModalComponent } from '../../components/mep-creation-modal/mep-creation-modal.component';
+import { MepCreationModalComponent } from '../../components/modals/mep-creation-modal/mep-creation-modal.component';
 import { Template } from '../../interfaces/responses/template/template';
 import { TemplateService } from '../../services/template.service';
 import { ApplicationService } from '../../services/application.service';
@@ -21,7 +21,7 @@ export class MepsComponent implements OnInit, OnDestroy {
   public meps: Mep[];
   public templates: Template[];
   public projects: string[];
-  public statuses: string[];
+  public statuses: string[];w
 
   public displayedColumns: string[] = ['name', 'status', 'project', 'creationDate', 'lastModificationDate', 'closureDate', 'action'];
 

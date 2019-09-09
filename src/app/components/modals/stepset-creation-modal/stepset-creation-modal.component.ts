@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { TemplateService } from '../../services/template.service';
+import { TemplateService } from '../../../services/template.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Template } from '../../interfaces/responses/template/template';
-import { StepSetCreationModalData } from '../../interfaces/modals/StepSetCreationModalData';
+import { Template } from '../../../interfaces/responses/template/template';
+import { StepSetCreationModalData } from '../../../interfaces/modals/StepSetCreationModalData';
 
 @Component({
   selector: 'mep-stepset-creation-modal',

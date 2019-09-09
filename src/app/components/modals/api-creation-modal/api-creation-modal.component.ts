@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Mep } from '../../interfaces/responses/mep/mep';
+import { Mep } from '../../../interfaces/responses/mep/mep';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { ApiCreationModalData } from '../../interfaces/modals/ApiCreationModalData';
-import { ApiService } from '../../services/api.service';
-import { Type } from '../../interfaces/enums/type';
+import { ApiCreationModalData } from '../../../interfaces/modals/ApiCreationModalData';
+import { ApiService } from '../../../services/api.service';
+import { Type } from '../../../interfaces/enums/type';
 
 @Component({
   selector: 'mep-api-creation-modal',

@@ -1,10 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { MepCreationModalData } from '../../interfaces/modals/MepCreationModalData';
-import { TemplateService } from '../../services/template.service';
-import { Template } from '../../interfaces/responses/template/template';
-import { TemplateCreationModalData } from '../../interfaces/modals/TemplateCreationModalData';
+import { TemplateService } from '../../../services/template.service';
+import { Template } from '../../../interfaces/responses/template/template';
+import { TemplateCreationModalData } from '../../../interfaces/modals/TemplateCreationModalData';
 
 @Component({
   selector: 'mep-template-creation-modal',

@@ -10,9 +10,9 @@ import { Step } from '../../interfaces/responses/mep/step';
 import { ApiService } from '../../services/api.service';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { StepSet } from '../../interfaces/responses/mep/step-set';
-import { ApiCreationModalComponent } from '../../components/api-creation-modal/api-creation-modal.component';
+import { ApiCreationModalComponent } from '../../components/modals/api-creation-modal/api-creation-modal.component';
 import { MatDialog } from '@angular/material';
-import { ConfirmationModalComponent } from '../../components/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from '../../components/modals/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'mep-mep',

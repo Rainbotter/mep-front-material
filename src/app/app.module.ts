@@ -37,12 +37,12 @@ import { TemplateComponent } from './pages/template/template.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MepCreationModalComponent } from './components/mep-creation-modal/mep-creation-modal.component';
-import { ApiCreationModalComponent } from './components/api-creation-modal/api-creation-modal.component';
-import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
-import { TemplateCreationModalComponent } from './components/template-creation-modal/template-creation-modal.component';
-import { StepsetCreationModalComponent } from './components/stepset-creation-modal/stepset-creation-modal.component';
-import { StepCreationModalComponent } from './components/step-creation-modal/step-creation-modal.component';
+import { MepCreationModalComponent } from './components/modals/mep-creation-modal/mep-creation-modal.component';
+import { ApiCreationModalComponent } from './components/modals/api-creation-modal/api-creation-modal.component';
+import { ConfirmationModalComponent } from './components/modals/confirmation-modal/confirmation-modal.component';
+import { TemplateCreationModalComponent } from './components/modals/template-creation-modal/template-creation-modal.component';
+import { StepsetCreationModalComponent } from './components/modals/stepset-creation-modal/stepset-creation-modal.component';
+import { StepCreationModalComponent } from './components/modals/step-creation-modal/step-creation-modal.component';
 
 @NgModule({
   declarations: [

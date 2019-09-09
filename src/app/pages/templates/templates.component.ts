@@ -4,7 +4,7 @@ import { Template } from '../../interfaces/responses/template/template';
 import { MepService } from '../../services/mep.service';
 import { MatDialog } from '@angular/material';
 import { TemplateService } from '../../services/template.service';
-import { TemplateCreationModalComponent } from '../../components/template-creation-modal/template-creation-modal.component';
+import { TemplateCreationModalComponent } from '../../components/modals/template-creation-modal/template-creation-modal.component';
 import { Subscription } from 'rxjs';
 import { ApplicationService } from '../../services/application.service';
 

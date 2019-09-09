@@ -5,8 +5,8 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Status } from '../../interfaces/enums/status';
 import { MatDialog } from '@angular/material';
-import { StepsetCreationModalComponent } from '../../components/stepset-creation-modal/stepset-creation-modal.component';
-import { StepCreationModalComponent } from '../../components/step-creation-modal/step-creation-modal.component';
+import { StepsetCreationModalComponent } from '../../components/modals/stepset-creation-modal/stepset-creation-modal.component';
+import { StepCreationModalComponent } from '../../components/modals/step-creation-modal/step-creation-modal.component';
 
 @Component({
   selector: 'mep-template',
