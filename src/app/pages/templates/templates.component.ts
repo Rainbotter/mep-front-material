@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { TemplateService } from '../../services/template.service';
 import { TemplateCreationModalComponent } from '../../components/template-creation-modal/template-creation-modal.component';
 import { Subscription } from 'rxjs';
+import { ApplicationService } from '../../services/application.service';
 
 @Component({
   selector: 'mep-templates',
@@ -21,12 +22,18 @@ export class TemplatesComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private mepService: MepService,
+  constructor(private appService: ApplicationService,
+              private mepService: MepService,
               private templateService: TemplateService,
               public dialog: MatDialog) {
 
+    this.appService.startLoading();
+
     this.mepService.getMeps()
-      .then(res => this.meps = res)
+      .then(res => {
+        this.meps = res;
+        this.appService.stopLoading();
+      })
       .catch(err => console.log(err));
 
     this.templateService.getTemplates()

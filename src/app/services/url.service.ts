@@ -17,6 +17,14 @@ export class UrlService {
     return this.getTemplatesUrl() + '/' + templateId;
   }
 
+  public getTemplateStepSetUrl(templateId: string, stepSetId: string): string {
+    return this.getTemplateUrl(templateId) + '/' + stepSetId;
+  }
+
+  public getTemplateStepUrl(templateId: string, stepSetId: string, stepId: string): string {
+    return this.getTemplateStepSetUrl(templateId, stepSetId) + '/' + stepId;
+  }
+
   public getMepsUrl(): string {
     return `${environment.apiUrl}${environment.paths.meps}`;
   }

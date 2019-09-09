@@ -25,4 +25,24 @@ export class TemplateService {
     return this.http.get<Template>(this.urlService.getTemplateUrl(templateId)).toPromise();
   }
 
+  public createStepSet(templateId: string, stepSetName: string): Promise<Template> {
+    const requestObject = {name};
+    return this.http.post<Template>(this.urlService.getTemplateUrl(templateId), requestObject).toPromise();
+  }
+
+  public createStep(templateId: string, StepSetId: string, stepName: string): Promise<Template> {
+    const requestObject = {name};
+    return this.http.post<Template>(this.urlService.getTemplateStepSetUrl(templateId, StepSetId), requestObject).toPromise();
+  }
+
+  public deleteStepSet(templateId: string): Promise<Template> {
+    const requestObject = {};
+    return this.http.delete<Template>(this.urlService.getTemplateUrl(templateId), requestObject).toPromise();
+  }
+
+  public deleteStep(templateId: string, StepSetId: string): Promise<Template> {
+    const requestObject = {};
+    return this.http.delete<Template>(this.urlService.getTemplateStepSetUrl(templateId, StepSetId), requestObject).toPromise();
+  }
+
 }

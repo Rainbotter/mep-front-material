@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MepCreationModalData } from '../../interfaces/modals/MepCreationModalData';
 import { TemplateService } from '../../services/template.service';
 import { Template } from '../../interfaces/responses/template/template';
+import { TemplateCreationModalData } from '../../interfaces/modals/TemplateCreationModalData';
 
 @Component({
   selector: 'mep-template-creation-modal',
@@ -17,7 +18,7 @@ export class TemplateCreationModalComponent implements OnInit {
   public nameControl: FormControl;
 
   constructor(public dialogRef: MatDialogRef<TemplateCreationModalComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: MepCreationModalData,
+              @Inject(MAT_DIALOG_DATA) public data: TemplateCreationModalData,
               private templateService: TemplateService,
               private _formBuilder: FormBuilder) {
     this.nameControl = this._formBuilder.control('', Validators.required);

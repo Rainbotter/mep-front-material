@@ -4,6 +4,9 @@ import { TemplateService } from '../../services/template.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Status } from '../../interfaces/enums/status';
+import { MatDialog } from '@angular/material';
+import { StepsetCreationModalComponent } from '../../components/stepset-creation-modal/stepset-creation-modal.component';
+import { StepCreationModalComponent } from '../../components/step-creation-modal/step-creation-modal.component';
 
 @Component({
   selector: 'mep-template',
@@ -12,7 +15,7 @@ import { Status } from '../../interfaces/enums/status';
 })
 export class TemplateComponent implements OnInit, OnDestroy {
 
-  private template: Template;
+  public template: Template;
 
   private subscriptions: Subscription[];
 
@@ -20,7 +23,8 @@ export class TemplateComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private templateService: TemplateService) {
+              private templateService: TemplateService,
+              public dialog: MatDialog) {
     this.subscriptions = [];
     this.statuses = [Status.OK, Status.PENDING, Status.NOK, Status.NA];
     this.subscriptions.push(this.route.queryParams.subscribe(params => {
@@ -40,11 +44,26 @@ export class TemplateComponent implements OnInit, OnDestroy {
   }
 
   public addStepset(): void {
+    const dialogRef = this.dialog.open(StepsetCreationModalComponent, {
+      autoFocus: false
+    });
 
+    this.subscriptions.push(
+      dialogRef.afterClosed().subscribe(res => {
+      })
+    );
   }
 
   public addStep(setStepId: string): void {
 
+    const dialogRef = this.dialog.open(StepCreationModalComponent, {
+      autoFocus: false
+    });
+
+    this.subscriptions.push(
+      dialogRef.afterClosed().subscribe(res => {
+      })
+    );
   }
 
 }

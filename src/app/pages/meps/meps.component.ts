@@ -7,6 +7,7 @@ import { MatDialog, PageEvent } from '@angular/material';
 import { MepCreationModalComponent } from '../../components/mep-creation-modal/mep-creation-modal.component';
 import { Template } from '../../interfaces/responses/template/template';
 import { TemplateService } from '../../services/template.service';
+import { ApplicationService } from '../../services/application.service';
 
 @Component({
   selector: 'mep-meps',
@@ -24,7 +25,7 @@ export class MepsComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = ['name', 'status', 'project', 'creationDate', 'lastModificationDate', 'closureDate', 'action'];
 
-  public length = 100;
+  public length = 0;
   public pageSize = 10;
 
   public projectControl = new FormControl();
@@ -32,9 +33,11 @@ export class MepsComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(private mepService: MepService,
+  constructor(private appService: ApplicationService,
+              private mepService: MepService,
               private templateService: TemplateService,
               public dialog: MatDialog) {
+    this.appService.startLoading();
     this.updateMeps();
 
     this.templateService.getTemplates()
@@ -110,6 +113,7 @@ export class MepsComponent implements OnInit, OnDestroy {
         this.projects = Array.from(new Set(this.allMeps.map(mep => mep.project)));
         this.statuses = ['En cours', 'Fermée'];
         this.updateMepsToDisplay();
+        this.appService.stopLoading();
       })
       .catch(err => console.log(err));
   }

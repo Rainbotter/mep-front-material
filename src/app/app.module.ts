@@ -41,6 +41,8 @@ import { MepCreationModalComponent } from './components/mep-creation-modal/mep-c
 import { ApiCreationModalComponent } from './components/api-creation-modal/api-creation-modal.component';
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 import { TemplateCreationModalComponent } from './components/template-creation-modal/template-creation-modal.component';
+import { StepsetCreationModalComponent } from './components/stepset-creation-modal/stepset-creation-modal.component';
+import { StepCreationModalComponent } from './components/step-creation-modal/step-creation-modal.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { TemplateCreationModalComponent } from './components/template-creation-m
     MepCreationModalComponent,
     ApiCreationModalComponent,
     ConfirmationModalComponent,
-    TemplateCreationModalComponent
+    TemplateCreationModalComponent,
+    StepsetCreationModalComponent,
+    StepCreationModalComponent
   ],
   imports: [
     CommonModule,
@@ -90,7 +94,14 @@ import { TemplateCreationModalComponent } from './components/template-creation-m
     {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
   ],
   bootstrap: [AppComponent],
-  entryComponents: [MepCreationModalComponent, ApiCreationModalComponent, ConfirmationModalComponent, TemplateCreationModalComponent]
+  entryComponents: [
+    MepCreationModalComponent,
+    ApiCreationModalComponent,
+    ConfirmationModalComponent,
+    TemplateCreationModalComponent,
+    StepsetCreationModalComponent,
+    StepCreationModalComponent
+  ]
 })
 export class AppModule {
 }
