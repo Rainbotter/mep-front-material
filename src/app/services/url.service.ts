@@ -89,5 +89,17 @@ export class UrlService {
     return this.getStepsUrl(mepId, apiId, stepsetId) + '/' + stepId;
   }
 
+  public getDistinctStatusesUrl() {
+    return `${environment.apiUrl}/statuses`;
+  }
+
+  public getDistinctProjectNamesUrl() {
+    return `${environment.apiUrl}/distinct/projects`;
+  }
+
+  public getDistinctApiNamesUrl() {
+    return `${environment.apiUrl}/distinct/apis`;
+  }
+
 
 }

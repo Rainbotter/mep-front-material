@@ -5,22 +5,42 @@ import { Injectable } from '@angular/core';
 })
 export class ApplicationService {
 
-  public isLoadingState;
+  private isLoadingState: number;
+  private isBackgroundLoadingState: number;
 
   constructor() {
-    this.isLoadingState = false;
+    this.isLoadingState = 0;
+    this.isBackgroundLoadingState = 0;
   }
 
   public startLoading(): void {
-    this.isLoadingState = true;
+    this.isLoadingState++;
   }
 
   public stopLoading(): void {
-    this.isLoadingState = false;
+    this.isLoadingState--;
+    if (this.isLoadingState < 0) {
+      this.isLoadingState = 0;
+    }
   }
 
   public isLoading(): boolean {
-    return this.isLoadingState;
+    return this.isLoadingState !== 0;
+  }
+
+  public startBackgroundLoading(): void {
+    this.isBackgroundLoadingState++;
+  }
+
+  public stopBackgroundLoading(): void {
+    this.isBackgroundLoadingState--;
+    if (this.isBackgroundLoadingState < 0) {
+      this.isBackgroundLoadingState = 0;
+    }
+  }
+
+  public isBackgroundLoading(): boolean {
+    return this.isBackgroundLoadingState !== 0;
   }
 
 }

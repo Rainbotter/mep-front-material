@@ -7,7 +7,7 @@
     <mat-form-field class="filter_button">
       <mat-label>Projets</mat-label>
       <mat-select [formControl]="projectControl" multiple>
-        <mat-option *ngFor="let project of projects" [value]="project">{{project}}</mat-option>
+        <mat-option *ngFor="let project of miscService.projectNames" [value]="project">{{project}}</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -27,7 +27,7 @@
   </div>
 </div>
 
-<table mat-table matSort [dataSource]="meps">
+<table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="meps">
 
   <ng-container matColumnDef="name">
     <th mat-header-cell mat-sort-header *matHeaderCellDef> Nom</th>
@@ -42,6 +42,11 @@
   <ng-container matColumnDef="project">
     <th mat-header-cell mat-sort-header *matHeaderCellDef> Projet</th>
     <td mat-cell *matCellDef="let element"> {{element.project}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dueDate">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef> Date de la Mep</th>
+    <td mat-cell *matCellDef="let element"> {{element.dueDate | date: 'dd/MM/yyyy'}} </td>
   </ng-container>
 
   <ng-container matColumnDef="creationDate">
@@ -60,7 +65,7 @@
   </ng-container>
 
   <ng-container matColumnDef="action">
-    <th mat-header-cell mat-sort-header *matHeaderCellDef></th>
+    <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element" class="action-column">
       <button mat-stroked-button
               [routerLink]="['/mep']"

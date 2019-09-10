@@ -7,7 +7,7 @@
              [matAutocomplete]="projectChoice"
              matInput>
       <mat-autocomplete #projectChoice="matAutocomplete">
-        <mat-option *ngFor="let project of projects" [value]="project">
+        <mat-option *ngFor="let project of miscService.projectNames" [value]="project">
           {{project}}
         </mat-option>
       </mat-autocomplete>

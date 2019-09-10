@@ -1,4 +1,6 @@
 <mep-header></mep-header>
+<mat-progress-bar *ngIf="app.isBackgroundLoading()" mode="query" color="warn"></mat-progress-bar>
+<mat-progress-bar *ngIf="!app.isBackgroundLoading()" mode="determinate" color="primary"></mat-progress-bar>
 <div class="content" [class.disabled-content]="app.isLoading()">
   <router-outlet></router-outlet>
 </div>

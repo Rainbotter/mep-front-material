@@ -17,8 +17,7 @@
          matInput placeholder="maintainer">
 </mat-form-field>
 
-<mat-form-field class="formField" appearance="outline"
-                (click)="saveFocusinValue(mep?.dueDate?.toISOString() || '');">
+<mat-form-field class="formField" appearance="outline" (click)="saveFocusinValue(mep?.dueDate?.toISOString() || '');">
   <mat-label>Date de la mep</mat-label>
   <input autocomplete="off" matInput
          [matDatepicker]="dueDatePick"

@@ -5,8 +5,14 @@
     <mat-form-field class="formField" appearance="outline">
       <mat-label>Nom</mat-label>
       <input [formControl]="nameControl"
+             [matAutocomplete]="projectChoice"
              autocomplete="off"
              matInput>
+      <mat-autocomplete #projectChoice="matAutocomplete">
+        <mat-option *ngFor="let project of miscService.apiNames" [value]="project">
+          {{project}}
+        </mat-option>
+      </mat-autocomplete>
       <mat-error *ngIf="nameControl.hasError('required')">
         Ce champs doit être rempli
       </mat-error>

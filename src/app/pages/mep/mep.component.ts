@@ -36,7 +36,6 @@ export class MepComponent implements OnInit, OnDestroy {
               public dialog: MatDialog) {
     this.mep = {};
     this.subscriptions = [];
-    this.app.startLoading();
     this.statuses = Status.getAllStatus();
     this.updateMep();
   }
@@ -82,12 +81,14 @@ export class MepComponent implements OnInit, OnDestroy {
   }
 
   public closeMep(mep: Mep): void {
+    this.app.startLoading();
     this.mepService.closeMep(mep.id)
       .then(res => {
+        this.app.stopLoading();
         this.mep = res;
       })
       .catch(err => {
-
+        this.app.stopLoading();
       });
   }
 
@@ -135,6 +136,7 @@ export class MepComponent implements OnInit, OnDestroy {
   }
 
   public updateMep(): void {
+    this.app.startLoading();
     this.subscriptions.push(this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.mepService.getMep(params['id']).then(value => {
@@ -156,9 +158,11 @@ export class MepComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.app.startLoading();
         this.mepService.removeApi(this.mep.id, apiToRemove.id)
           .then(res => {
             this.mep = res;
+            this.app.stopLoading();
           })
           .catch(err => {
 

@@ -4,6 +4,7 @@ import { MepCreationModalData } from '../../../interfaces/modals/MepCreationModa
 import { MepService } from '../../../services/mep.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Mep } from '../../../interfaces/responses/mep/mep';
+import { MiscService } from '../../../services/misc.service';
 
 @Component({
   selector: 'mep-mep-creation-modal',
@@ -11,8 +12,6 @@ import { Mep } from '../../../interfaces/responses/mep/mep';
   styleUrls: ['./mep-creation-modal.component.css']
 })
 export class MepCreationModalComponent implements OnInit {
-
-  public projects: string[];
 
   public mepGroup: FormGroup;
 
@@ -23,9 +22,8 @@ export class MepCreationModalComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<MepCreationModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: MepCreationModalData,
               private mepService: MepService,
-              private _formBuilder: FormBuilder) {
-    this.projects = Array.from(new Set(this.data.meps.map(mep => mep.project)));
-
+              private _formBuilder: FormBuilder,
+              public miscService: MiscService) {
     this.nameControl = this._formBuilder.control('', Validators.required);
     this.projectControl = this._formBuilder.control('', Validators.required);
     this.templateControl = this._formBuilder.control('', Validators.required);

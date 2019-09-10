@@ -3,11 +3,12 @@ import { MepService } from '../../services/mep.service';
 import { Mep } from '../../interfaces/responses/mep/mep';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { MatDialog, PageEvent } from '@angular/material';
+import { MatDialog, PageEvent, Sort, SortDirection } from '@angular/material';
 import { MepCreationModalComponent } from '../../components/modals/mep-creation-modal/mep-creation-modal.component';
 import { Template } from '../../interfaces/responses/template/template';
 import { TemplateService } from '../../services/template.service';
 import { ApplicationService } from '../../services/application.service';
+import { MiscService } from '../../services/misc.service';
 
 @Component({
   selector: 'mep-meps',
@@ -17,13 +18,13 @@ import { ApplicationService } from '../../services/application.service';
 export class MepsComponent implements OnInit, OnDestroy {
 
   private allMeps: Mep[];
+  private sort: Sort;
 
   public meps: Mep[];
   public templates: Template[];
-  public projects: string[];
-  public statuses: string[];w
+  public statuses: string[];
 
-  public displayedColumns: string[] = ['name', 'status', 'project', 'creationDate', 'lastModificationDate', 'closureDate', 'action'];
+  public displayedColumns: string[] = ['name', 'status', 'project', 'dueDate', 'creationDate', 'lastModificationDate', 'closureDate', 'action'];
 
   public length = 0;
   public pageSize = 10;
@@ -36,7 +37,11 @@ export class MepsComponent implements OnInit, OnDestroy {
   constructor(private appService: ApplicationService,
               private mepService: MepService,
               private templateService: TemplateService,
+              public miscService: MiscService,
               public dialog: MatDialog) {
+
+    this.sort = {active: 'dueDate', direction: 'desc'};
+    this.statuses = ['En cours', 'Fermée'];
     this.appService.startLoading();
     this.updateMeps();
 
@@ -107,15 +112,49 @@ export class MepsComponent implements OnInit, OnDestroy {
     this.mepService.getMeps()
       .then(res => {
         this.allMeps = res;
-        this.meps = this.allMeps.slice(0, this.pageSize);
         this.length = this.allMeps.length;
-
-        this.projects = Array.from(new Set(this.allMeps.map(mep => mep.project)));
-        this.statuses = ['En cours', 'Fermée'];
-        this.updateMepsToDisplay();
+        this.sortAllMeps();
         this.appService.stopLoading();
       })
       .catch(err => console.log(err));
+  }
+
+  public sortData(sort: Sort) {
+    this.sort = sort;
+    this.sortAllMeps();
+  }
+
+  private sortAllMeps() {
+    if (this.sort && this.sort.active && this.sort.direction !== '') {
+      this.allMeps = this.allMeps.sort((a, b) => {
+        const isAsc = this.sort.direction === 'asc';
+        switch (this.sort.active) {
+          case 'name':
+            return this.compare(a.name.toLowerCase(), b.name.toLowerCase(), isAsc);
+          case 'status':
+            return this.compare(this.computeStatus(a), this.computeStatus(b), isAsc);
+          case 'project':
+            return this.compare(a.project.toLowerCase(), b.project.toLowerCase(), isAsc);
+          case 'dueDate':
+            return this.compare(a.dueDate, b.dueDate, isAsc);
+          case 'creationDate':
+            return this.compare(a.creationDate, b.creationDate, isAsc);
+          case 'lastModificationDate':
+            return this.compare(a.lastModificationDate, b.lastModificationDate, isAsc);
+          case 'closureDate':
+            return this.compare(a.closureDate, b.closureDate, isAsc);
+          default:
+            return 0;
+        }
+      });
+    }
+
+    this.updateMepsToDisplay();
+    this.meps = this.allMeps.slice(0, this.pageSize);
+  }
+
+  private compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
 }

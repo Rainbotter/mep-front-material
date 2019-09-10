@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ApiCreationModalData } from '../../../interfaces/modals/ApiCreationModalData';
 import { ApiService } from '../../../services/api.service';
 import { Type } from '../../../interfaces/enums/type';
+import { MiscService } from '../../../services/misc.service';
 
 @Component({
   selector: 'mep-api-creation-modal',
@@ -23,7 +24,8 @@ export class ApiCreationModalComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<ApiCreationModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ApiCreationModalData,
               private apiService: ApiService,
-              private _formBuilder: FormBuilder) {
+              private _formBuilder: FormBuilder,
+              public miscService: MiscService) {
 
     this.nameControl = this._formBuilder.control('', Validators.required);
     this.typeControl = this._formBuilder.control('', Validators.required);
