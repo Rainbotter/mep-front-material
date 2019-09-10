@@ -42,7 +42,6 @@ export class MepsComponent implements OnInit, OnDestroy {
 
     this.sort = {active: 'dueDate', direction: 'desc'};
     this.statuses = ['En cours', 'Fermée'];
-    this.appService.startLoading();
     this.updateMeps();
 
     this.templateService.getTemplates()
@@ -109,6 +108,7 @@ export class MepsComponent implements OnInit, OnDestroy {
   }
 
   private updateMeps(): void {
+    this.appService.startLoading();
     this.mepService.getMeps()
       .then(res => {
         this.allMeps = res;

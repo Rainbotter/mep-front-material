@@ -51,6 +51,9 @@ export class TemplatesComponent implements OnInit, OnDestroy {
 
 
   public numberOfUse(template: Template): number {
+    if (!this.meps) {
+      return 0;
+    }
     return this.meps.filter(mep => mep.templateId === template.id).length;
   }
 

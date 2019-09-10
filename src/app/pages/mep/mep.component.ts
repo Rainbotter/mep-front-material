@@ -13,6 +13,7 @@ import { StepSet } from '../../interfaces/responses/mep/step-set';
 import { ApiCreationModalComponent } from '../../components/modals/api-creation-modal/api-creation-modal.component';
 import { MatDialog } from '@angular/material';
 import { ConfirmationModalComponent } from '../../components/modals/confirmation-modal/confirmation-modal.component';
+import { MiscService } from '../../services/misc.service';
 
 @Component({
   selector: 'mep-mep',
@@ -33,6 +34,7 @@ export class MepComponent implements OnInit, OnDestroy {
               private apiService: ApiService,
               private router: Router,
               private app: ApplicationService,
+              private miscService: MiscService,
               public dialog: MatDialog) {
     this.mep = {};
     this.subscriptions = [];
@@ -69,12 +71,12 @@ export class MepComponent implements OnInit, OnDestroy {
 
   public setStepStatus(mep: Mep, api: Api, stepset: StepSet, step: Step, status: string) {
     this.apiService.updateStepStatus(mep.id, api.id, stepset.id, step.id, status)
-      .then(res => step.status = status)
-      .catch(err => console.log(err));
+      .then(res => {
+        step.status = status;
+      });
   }
 
   public updateMepValue(mep: Mep, fieldName: string) {
-    console.log(mep[fieldName]);
     if (mep[fieldName] !== this.focusInValue) {
       this.apiService.updateMepField(mep.id, fieldName, mep[fieldName]);
     }
@@ -93,16 +95,19 @@ export class MepComponent implements OnInit, OnDestroy {
   }
 
   public reOpenMep(mep: Mep): void {
+    this.app.startLoading();
     this.mepService.openMep(mep.id)
       .then(res => {
+        this.app.stopLoading();
         this.mep = res;
       })
       .catch(err => {
-
+        this.app.stopLoading();
       });
   }
 
   public updateApiValue(mep: Mep, api: Api, fieldName: string) {
+    ;
     if (api[fieldName] !== this.focusInValue) {
       this.apiService.updateApiField(mep.id, api.id, fieldName, api[fieldName]);
     }

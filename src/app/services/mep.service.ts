@@ -3,6 +3,7 @@ import { Mep } from '../interfaces/responses/mep/mep';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { UrlService } from './url.service';
+import { ApplicationService } from './application.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,12 @@ import { UrlService } from './url.service';
 export class MepService {
 
   constructor(private http: HttpClient,
-              private urlService: UrlService) {
+              private urlService: UrlService,
+              private app: ApplicationService) {
   }
 
   public getMeps(): Promise<Mep[]> {
+    this.app.startBackgroundLoading();
     return this.http.get<Mep[]>(this.urlService.getMepsUrl())
       .pipe(map(value => {
         value.forEach(mep => {
@@ -21,10 +24,18 @@ export class MepService {
         });
         return value;
       }))
-      .toPromise();
+      .toPromise()
+      .then(res => {
+        this.app.stopBackgroundLoading();
+        return res;
+      }).catch(err => {
+        this.app.stopBackgroundLoading();
+        return err;
+      });
   }
 
   public getMep(mepId: string): Promise<Mep> {
+    this.app.startBackgroundLoading();
     return this.http.get<Mep>(this.urlService.getMepUrl(mepId))
       .pipe(map(mep => {
         this.mapDatesToMep(mep);
@@ -40,10 +51,18 @@ export class MepService {
         });
         return mep;
       }))
-      .toPromise();
+      .toPromise()
+      .then(res => {
+        this.app.stopBackgroundLoading();
+        return res;
+      }).catch(err => {
+        this.app.stopBackgroundLoading();
+        return err;
+      });
   }
 
   public createMep(name: string, project: string, templateId: string): Promise<Mep> {
+    this.app.startBackgroundLoading();
     const requestObject = {name, project, templateId};
 
     return this.http.post<Mep>(this.urlService.getMepsUrl(), requestObject)
@@ -51,19 +70,50 @@ export class MepService {
         this.mapDatesToMep(mep);
         return mep;
       }))
-      .toPromise();
+      .toPromise()
+      .then(res => {
+        this.app.stopBackgroundLoading();
+        return res;
+      }).catch(err => {
+        this.app.stopBackgroundLoading();
+        return err;
+      });
   }
 
   public removeApi(mepId: string, apiId: string): Promise<Mep> {
-    return this.http.delete<Mep>(this.urlService.getApiUrl(mepId, apiId), {}).toPromise();
+    this.app.startBackgroundLoading();
+    return this.http.delete<Mep>(this.urlService.getApiUrl(mepId, apiId), {}).toPromise()
+      .then(res => {
+        this.app.stopBackgroundLoading();
+        return res;
+      }).catch(err => {
+        this.app.stopBackgroundLoading();
+        return err;
+      });
   }
 
   public openMep(mepId: string): Promise<any> {
-    return this.http.put<Mep[]>(this.urlService.getMepOpenUrl(mepId), {}).toPromise();
+    this.app.startBackgroundLoading();
+    return this.http.put<Mep[]>(this.urlService.getMepOpenUrl(mepId), {}).toPromise()
+      .then(res => {
+        this.app.stopBackgroundLoading();
+        return res;
+      }).catch(err => {
+        this.app.stopBackgroundLoading();
+        return err;
+      });
   }
 
   public closeMep(mepId: string): Promise<any> {
-    return this.http.put<Mep[]>(this.urlService.getMepCloseUrl(mepId), {}).toPromise();
+    this.app.startBackgroundLoading();
+    return this.http.put<Mep[]>(this.urlService.getMepCloseUrl(mepId), {}).toPromise()
+      .then(res => {
+        this.app.stopBackgroundLoading();
+        return res;
+      }).catch(err => {
+        this.app.stopBackgroundLoading();
+        return err;
+      });
   }
 
   private mapDatesToMep(mep: Mep): void {
