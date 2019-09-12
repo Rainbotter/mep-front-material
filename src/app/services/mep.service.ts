@@ -30,7 +30,7 @@ export class MepService {
         return res;
       }).catch(err => {
         this.app.stopBackgroundLoading();
-        return err;
+        throw err;
       });
   }
 
@@ -57,7 +57,7 @@ export class MepService {
         return res;
       }).catch(err => {
         this.app.stopBackgroundLoading();
-        return err;
+        throw err;
       });
   }
 
@@ -76,7 +76,7 @@ export class MepService {
         return res;
       }).catch(err => {
         this.app.stopBackgroundLoading();
-        return err;
+        throw err;
       });
   }
 
@@ -88,7 +88,7 @@ export class MepService {
         return res;
       }).catch(err => {
         this.app.stopBackgroundLoading();
-        return err;
+        throw err;
       });
   }
 
@@ -100,7 +100,7 @@ export class MepService {
         return res;
       }).catch(err => {
         this.app.stopBackgroundLoading();
-        return err;
+        throw err;
       });
   }
 
@@ -112,7 +112,7 @@ export class MepService {
         return res;
       }).catch(err => {
         this.app.stopBackgroundLoading();
-        return err;
+        throw err;
       });
   }
 

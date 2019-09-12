@@ -23,7 +23,10 @@ export class MiscService {
         this.statuses = res;
         this.appService.stopBackgroundLoading();
       })
-      .catch(err => this.appService.stopBackgroundLoading());
+      .catch(err => {
+        this.appService.stopBackgroundLoading();
+        throw err;
+      });
 
     this.pollProjectNames();
     this.pollApiNames();
@@ -34,7 +37,10 @@ export class MiscService {
     this.callProjectNames().then(result => {
       this.projectNames = result;
       this.appService.stopBackgroundLoading();
-    }).catch(err => this.appService.stopBackgroundLoading());
+    }).catch(err => {
+      this.appService.stopBackgroundLoading();
+      throw err;
+    });
 
     setTimeout(() => this.pollApiNames(), this.pollingTime);
   }
@@ -44,7 +50,10 @@ export class MiscService {
     this.callApiNames().then(result => {
       this.apiNames = result;
       this.appService.stopBackgroundLoading();
-    }).catch(err => this.appService.stopBackgroundLoading());
+    }).catch(err => {
+      this.appService.stopBackgroundLoading();
+      throw err;
+    });
 
     setTimeout(() => this.pollApiNames(), this.pollingTime);
   }
