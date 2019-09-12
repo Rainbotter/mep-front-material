@@ -12,6 +12,7 @@ import { StepTemplate } from '../../interfaces/responses/template/step-template'
 import { ConfirmationModalComponent } from '../../components/modals/confirmation-modal/confirmation-modal.component';
 import { RenameStepsetModalComponent } from '../../components/modals/rename-stepset-modal/rename-stepset-modal.component';
 import { RenameStepModalComponent } from '../../components/modals/rename-step-modal/rename-step-modal.component';
+import { SnackService } from '../../services/snack.service';
 
 @Component({
   selector: 'mep-template',
@@ -27,6 +28,7 @@ export class TemplateComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private templateService: TemplateService,
+              private snackService: SnackService,
               public dialog: MatDialog) {
     this.subscriptions = [];
     this.statuses = Status.getAllStatus();
@@ -81,10 +83,9 @@ export class TemplateComponent implements OnInit, OnDestroy {
         this.templateService.deleteStepSet(this.template.id, stepSet.id)
           .then(res => {
             this.template = res;
+            this.snackService.openActionSucceedSnack();
           })
-          .catch(err => {
-
-          });
+          .catch(err => this.snackService.openErrorSnack('Une erreur est survenue lors la suppression du step: ' + err));
       }
     }));
   }
@@ -100,9 +101,10 @@ export class TemplateComponent implements OnInit, OnDestroy {
         this.templateService.deleteStep(this.template.id, stepSet.id, step.id)
           .then(res => {
             this.template = res;
+            this.snackService.openActionSucceedSnack();
           })
           .catch(err => {
-
+            this.snackService.openErrorSnack('Une erreur est survenue lors la supression du step: ' + err);
           });
       }
     }));
@@ -139,8 +141,10 @@ export class TemplateComponent implements OnInit, OnDestroy {
   private updateTemplate(): void {
     this.subscriptions.push(this.route.queryParams.subscribe(params => {
       this.templateService.getTemplate(params['id'])
-        .then(res => this.template = res)
-        .catch(err => console.log(err));
+        .then(res => {
+          this.template = res;
+        })
+        .catch(err => this.snackService.openErrorSnack('Une erreur est survenue lors de la mise à jour du template : ' + err));
     }));
   }
 

@@ -13,7 +13,7 @@ import { StepSet } from '../../interfaces/responses/mep/step-set';
 import { ApiCreationModalComponent } from '../../components/modals/api-creation-modal/api-creation-modal.component';
 import { MatDialog } from '@angular/material';
 import { ConfirmationModalComponent } from '../../components/modals/confirmation-modal/confirmation-modal.component';
-import { MiscService } from '../../services/misc.service';
+import { SnackService } from '../../services/snack.service';
 
 @Component({
   selector: 'mep-mep',
@@ -34,7 +34,7 @@ export class MepComponent implements OnInit, OnDestroy {
               private apiService: ApiService,
               private router: Router,
               private app: ApplicationService,
-              private miscService: MiscService,
+              private snackService: SnackService,
               public dialog: MatDialog) {
     this.mep = {};
     this.subscriptions = [];
@@ -69,16 +69,24 @@ export class MepComponent implements OnInit, OnDestroy {
       .length === 0;
   }
 
+  public isClosed(): boolean {
+    return !!this.mep.closureDate;
+  }
+
   public setStepStatus(mep: Mep, api: Api, stepset: StepSet, step: Step, status: string) {
     this.apiService.updateStepStatus(mep.id, api.id, stepset.id, step.id, status)
       .then(res => {
         step.status = status;
-      });
+        this.snackService.openActionSucceedSnack();
+      })
+      .catch(err => this.snackService.openErrorSnack('Une erreur est survenue lors de la mise à jours du status de ' + step.name));
   }
 
   public updateMepValue(mep: Mep, fieldName: string) {
     if (mep[fieldName] !== this.focusInValue) {
-      this.apiService.updateMepField(mep.id, fieldName, mep[fieldName]);
+      this.apiService.updateMepField(mep.id, fieldName, mep[fieldName])
+        .then(res => this.snackService.openActionSucceedSnack())
+        .catch(err => this.snackService.openErrorSnack('Une erreur est survenue lors de la mise à jour du champs ' + fieldName));
     }
   }
 
@@ -86,10 +94,12 @@ export class MepComponent implements OnInit, OnDestroy {
     this.app.startLoading();
     this.mepService.closeMep(mep.id)
       .then(res => {
+        this.snackService.openActionSucceedSnack();
         this.app.stopLoading();
         this.mep = res;
       })
       .catch(err => {
+        this.snackService.openErrorSnack('Une erreur est survenue lors de la clotûre de la mep');
         this.app.stopLoading();
       });
   }
@@ -98,18 +108,21 @@ export class MepComponent implements OnInit, OnDestroy {
     this.app.startLoading();
     this.mepService.openMep(mep.id)
       .then(res => {
+        this.snackService.openActionSucceedSnack();
         this.app.stopLoading();
         this.mep = res;
       })
       .catch(err => {
+        this.snackService.openErrorSnack('Une erreur est survenue lors de la re-ouverture de la mep');
         this.app.stopLoading();
       });
   }
 
   public updateApiValue(mep: Mep, api: Api, fieldName: string) {
-    ;
     if (api[fieldName] !== this.focusInValue) {
-      this.apiService.updateApiField(mep.id, api.id, fieldName, api[fieldName]);
+      this.apiService.updateApiField(mep.id, api.id, fieldName, api[fieldName])
+        .then(res => this.snackService.openActionSucceedSnack())
+        .catch(err => this.snackService.openErrorSnack('Une erreur est survenue lors de la mise à jour du champs ' + fieldName));
     }
   }
 
@@ -145,9 +158,11 @@ export class MepComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.mepService.getMep(params['id']).then(value => {
+          this.snackService.openActionSucceedSnack();
           this.app.stopLoading();
           this.mep = value;
         }).catch(err => {
+          this.snackService.openErrorSnack('Une erreur est survenue lors du chargement de la MEP');
           this.app.stopLoading();
           this.router.navigate(['/']);
         });
@@ -166,11 +181,12 @@ export class MepComponent implements OnInit, OnDestroy {
         this.app.startLoading();
         this.mepService.removeApi(this.mep.id, apiToRemove.id)
           .then(res => {
+            this.snackService.openActionSucceedSnack();
             this.mep = res;
             this.app.stopLoading();
           })
           .catch(err => {
-
+            this.snackService.openErrorSnack('Une erreur est survenue lors de la suppression de l\'API ' + apiToRemove.name);
           });
       }
     }));

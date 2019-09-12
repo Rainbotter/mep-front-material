@@ -4,6 +4,7 @@
   <input autocomplete="off"
          (focusout)="updateMepValue(mep, 'version')"
          (focusin)="saveFocusinValue(mep.project)"
+         [readonly]="isClosed()"
          [(ngModel)]="mep.project"
          matInput placeholder="maintainer">
 </mat-form-field>
@@ -13,6 +14,7 @@
   <input autocomplete="off"
          (focusout)="updateMepValue(mep, 'version')"
          (focusin)="saveFocusinValue(mep.version)"
+         [readonly]="isClosed()"
          [(ngModel)]="mep.version"
          matInput placeholder="maintainer">
 </mat-form-field>
@@ -21,6 +23,7 @@
   <mat-label>Date de la mep</mat-label>
   <input autocomplete="off" matInput
          [matDatepicker]="dueDatePick"
+         [readonly]="isClosed()"
          [(ngModel)]="mep.dueDate">
   <mat-datepicker-toggle matSuffix [for]="dueDatePick"></mat-datepicker-toggle>
   <mat-datepicker (closed)="mep.dueDate.setHours(12); updateMepValue(mep, 'dueDate')" disabled="false"
@@ -29,8 +32,9 @@
 
 <mat-form-field class="formField" appearance="outline">
   <mat-label>Dernière modification</mat-label>
-  <input disabled autocomplete="off" matInput
+  <input autocomplete="off" matInput
          [matDatepicker]="lastModifDatePick"
+         [readonly]="true"
          [(ngModel)]="mep.lastModificationDate">
   <mat-datepicker-toggle matSuffix [for]="lastModifDatePick"></mat-datepicker-toggle>
   <mat-datepicker disabled #lastModifDatePick></mat-datepicker>
@@ -38,8 +42,9 @@
 
 <mat-form-field class="formField" appearance="outline">
   <mat-label>Date de clotûre</mat-label>
-  <input disabled autocomplete="off" matInput
+  <input autocomplete="off" matInput
          [matDatepicker]="closureDatePick"
+         [readonly]="true"
          [(ngModel)]="mep.closureDate">
   <mat-datepicker-toggle matSuffix [for]="closureDatePick"></mat-datepicker-toggle>
   <mat-datepicker disabled #closureDatePick></mat-datepicker>
@@ -50,7 +55,12 @@
 
 <h3>Apis</h3>
 <p>
-  <button mat-flat-button (click)="addApi()" color="primary">Ajouter une API</button>
+  <button (click)="addApi()"
+          [disabled]="isClosed()"
+          mat-flat-button
+          color="primary">
+    Ajouter une API
+  </button>
 </p>
 <mat-accordion [multi]="true">
   <mat-expansion-panel *ngFor="let api of mep?.apis"
@@ -78,6 +88,7 @@
                  (focusout)="updateApiValue(mep, api, 'maintainer')"
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.maintainer"
+                 [readonly]="isClosed()"
                  matInput placeholder="maintainer">
         </mat-form-field>
 
@@ -87,6 +98,7 @@
                  (focusout)="updateApiValue(mep, api, 'change')"
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.change"
+                 [readonly]="isClosed()"
                  matInput placeholder="change">
         </mat-form-field>
 
@@ -96,6 +108,7 @@
                  (focusout)="updateApiValue(mep, api, 'comment')"
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.comment"
+                 [readonly]="isClosed()"
                  matInput placeholder="Commentaire">
         </mat-form-field>
 
@@ -105,6 +118,7 @@
                  (focusout)="updateApiValue(mep, api, 'dbUpdate')"
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.dbUpdate"
+                 [readonly]="isClosed()"
                  matInput placeholder="Update DB ?">
         </mat-form-field>
 
@@ -114,6 +128,7 @@
                  (focusout)="updateApiValue(mep, api, 'exposition')"
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.exposition"
+                 [readonly]="isClosed()"
                  matInput placeholder="exposition">
         </mat-form-field>
       </div>
@@ -126,6 +141,7 @@
                  (focusout)="updateApiValue(mep, api, 'dockerImage')"
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.dockerImage"
+                 [readonly]="isClosed()"
                  matInput placeholder="image docker">
         </mat-form-field>
       </div>
@@ -137,6 +153,7 @@
                  (focusout)="updateApiValue(mep, api, 'appPort')"
                  (focusin)="saveFocusinValue(api.appPort)"
                  [(ngModel)]="api.appPort"
+                 [readonly]="isClosed()"
                  matInput>
         </mat-form-field>
 
@@ -146,6 +163,7 @@
                  (focusout)="updateApiValue(mep, api, 'dockerNode')"
                  (focusin)="saveFocusinValue(api.dockerNode)"
                  [(ngModel)]="api.dockerNode"
+                 [readonly]="isClosed()"
                  matInput>
         </mat-form-field>
 
@@ -155,6 +173,7 @@
                  (focusout)="updateApiValue(mep, api, 'dockerRunArgs')"
                  (focusin)="saveFocusinValue(api.dockerRunArgs)"
                  [(ngModel)]="api.dockerRunArgs"
+                 [readonly]="isClosed()"
                  matInput>
         </mat-form-field>
 
@@ -164,6 +183,7 @@
                  (focusout)="updateApiValue(mep, api, 'dockerToolboxVersion')"
                  (focusin)="saveFocusinValue(api.dockerToolboxVersion)"
                  [(ngModel)]="api.dockerToolboxVersion"
+                 [readonly]="isClosed()"
                  matInput>
         </mat-form-field>
 
@@ -176,6 +196,7 @@
                  (focusout)="updateApiValue(mep, api, 'namespace')"
                  (focusin)="saveFocusinValue(api.namespace)"
                  [(ngModel)]="api.namespace"
+                 [readonly]="isClosed()"
                  matInput>
         </mat-form-field>
 
@@ -185,6 +206,7 @@
                  (focusout)="updateApiValue(mep, api, 'branchName')"
                  (focusin)="saveFocusinValue(api.branchName)"
                  [(ngModel)]="api.branchName"
+                 [readonly]="isClosed()"
                  matInput>
         </mat-form-field>
 
@@ -194,6 +216,7 @@
                  (focusout)="updateApiValue(mep, api, 'tfsTeam')"
                  (focusin)="saveFocusinValue(api.tfsTeam)"
                  [(ngModel)]="api.tfsTeam"
+                 [readonly]="isClosed()"
                  matInput>
         </mat-form-field>
 
@@ -203,6 +226,7 @@
                  (focusout)="updateApiValue(mep, api, 'cluster')"
                  (focusin)="saveFocusinValue(api.cluster)"
                  [(ngModel)]="api.cluster"
+                 [readonly]="isClosed()"
                  matInput>
         </mat-form-field>
 
@@ -212,6 +236,7 @@
                  (focusout)="updateApiValue(mep, api, 'rancherProject')"
                  (focusin)="saveFocusinValue(api.rancherProject)"
                  [(ngModel)]="api.rancherProject"
+                 [readonly]="isClosed()"
                  matInput>
         </mat-form-field>
 
@@ -221,6 +246,7 @@
                  (focusout)="updateApiValue(mep, api, 'rancherEnv')"
                  (focusin)="saveFocusinValue(api.rancherEnv)"
                  [(ngModel)]="api.rancherEnv"
+                 [readonly]="isClosed()"
                  matInput>
         </mat-form-field>
 
@@ -230,6 +256,7 @@
                  (focusout)="updateApiValue(mep, api, 'rancherTemplate')"
                  (focusin)="saveFocusinValue(api.rancherTemplate)"
                  [(ngModel)]="api.rancherTemplate"
+                 [readonly]="isClosed()"
                  matInput>
         </mat-form-field>
       </div>
@@ -242,6 +269,7 @@
                  (focusout)="updateApiValue(mep, api, 'newVersion')"
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.newVersion"
+                 [readonly]="isClosed()"
                  matInput placeholder="nouvelle Version">
         </mat-form-field>
 
@@ -251,6 +279,7 @@
                  (focusout)="updateApiValue(mep, api, 'oldVersion')"
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.oldVersion"
+                 [readonly]="isClosed()"
                  matInput placeholder="ancienne version">
         </mat-form-field>
       </div>
@@ -267,6 +296,7 @@
                       [class.step-button-na]="step.status === 'NA'"
                       [class.step-button-pending]="step.status === 'PENDING'"
                       [matMenuTriggerFor]="menu"
+                      [disabled]="isClosed()"
                       mat-stroked-button
                       class="step-button">
                 {{step.name}}

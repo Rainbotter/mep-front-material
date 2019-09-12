@@ -28,7 +28,8 @@ import {
   MatSortModule,
   MatStepperModule,
   MatTableModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { MepsComponent } from './pages/meps/meps.component';
 import { TemplatesComponent } from './pages/templates/templates.component';
@@ -45,6 +46,9 @@ import { StepsetCreationModalComponent } from './components/modals/stepset-creat
 import { StepCreationModalComponent } from './components/modals/step-creation-modal/step-creation-modal.component';
 import { RenameStepsetModalComponent } from './components/modals/rename-stepset-modal/rename-stepset-modal.component';
 import { RenameStepModalComponent } from './components/modals/rename-step-modal/rename-step-modal.component';
+import { InfoSnackbarComponent } from './components/snackbars/info-snackbar/info-snackbar.component';
+import { ErrorSnackbarComponent } from './components/snackbars/error-snackbar/error-snackbar.component';
+import { ActionSucceedSnackbarComponent } from './components/snackbars/action-succeed-snackbar/action-succeed-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +66,10 @@ import { RenameStepModalComponent } from './components/modals/rename-step-modal/
     StepsetCreationModalComponent,
     StepCreationModalComponent,
     RenameStepsetModalComponent,
-    RenameStepModalComponent
+    RenameStepModalComponent,
+    InfoSnackbarComponent,
+    ErrorSnackbarComponent,
+    ActionSucceedSnackbarComponent
   ],
   imports: [
     CommonModule,
@@ -92,7 +99,8 @@ import { RenameStepModalComponent } from './components/modals/rename-step-modal/
     FontAwesomeModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'fr-FR'},
@@ -106,7 +114,10 @@ import { RenameStepModalComponent } from './components/modals/rename-step-modal/
     StepsetCreationModalComponent,
     StepCreationModalComponent,
     RenameStepsetModalComponent,
-    RenameStepModalComponent
+    RenameStepModalComponent,
+    InfoSnackbarComponent,
+    ErrorSnackbarComponent,
+    ActionSucceedSnackbarComponent
   ]
 })
 export class AppModule {

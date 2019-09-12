@@ -3,12 +3,13 @@ import { MepService } from '../../services/mep.service';
 import { Mep } from '../../interfaces/responses/mep/mep';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { MatDialog, PageEvent, Sort, SortDirection } from '@angular/material';
+import { MatDialog, PageEvent, Sort } from '@angular/material';
 import { MepCreationModalComponent } from '../../components/modals/mep-creation-modal/mep-creation-modal.component';
 import { Template } from '../../interfaces/responses/template/template';
 import { TemplateService } from '../../services/template.service';
 import { ApplicationService } from '../../services/application.service';
 import { MiscService } from '../../services/misc.service';
+import { SnackService } from '../../services/snack.service';
 
 @Component({
   selector: 'mep-meps',
@@ -38,6 +39,7 @@ export class MepsComponent implements OnInit, OnDestroy {
               private mepService: MepService,
               private templateService: TemplateService,
               public miscService: MiscService,
+              private snackService: SnackService,
               public dialog: MatDialog) {
 
     this.sort = {active: 'dueDate', direction: 'desc'};
@@ -46,7 +48,9 @@ export class MepsComponent implements OnInit, OnDestroy {
 
     this.templateService.getTemplates()
       .then(res => this.templates = res)
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.snackService.openErrorSnack('Une erreur est survenue lors de la récupération des templates')
+      });
 
     this.subscriptions.push(this.projectControl.valueChanges.subscribe(value => {
       this.updateMepsToDisplay();
@@ -116,7 +120,10 @@ export class MepsComponent implements OnInit, OnDestroy {
         this.sortAllMeps();
         this.appService.stopLoading();
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.snackService.openErrorSnack('Une erreur est survenue lors de la récupération des MEPs');
+        this.appService.stopLoading();
+      });
   }
 
   public sortData(sort: Sort) {
