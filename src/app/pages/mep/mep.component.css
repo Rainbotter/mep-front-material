@@ -104,6 +104,14 @@ table {
 }
 
 .link-mode {
-  color: #0000FF!important;
-  cursor: pointer!important;
+  color: #0000FF !important;
+  cursor: pointer !important;
+}
+
+.mep-header {
+  display: flex;
+}
+
+.mep-header button {
+  margin-left: 1rem;
 }

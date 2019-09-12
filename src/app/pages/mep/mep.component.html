@@ -1,5 +1,5 @@
-<h1>{{mep.name}}
-
+<h1 class="mep-header">
+  {{mep.name}}
   <button *ngIf="!mep.closureDate" (click)="closeMep(mep)" mat-flat-button color="primary">Clotûrer la mep</button>
   <button *ngIf="mep.closureDate" (click)="reOpenMep(mep)" mat-flat-button color="primary">re-ouvrir la mep</button>
 </h1>
