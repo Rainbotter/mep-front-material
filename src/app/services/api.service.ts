@@ -40,7 +40,7 @@ export class ApiService {
         return res;
       }).catch(err => {
         this.app.stopBackgroundLoading();
-        return err;
+        throw err;
       });
   }
 

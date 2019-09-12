@@ -12,5 +12,8 @@ export interface Mep {
   lastModificationDate?: Date;
   templateId?: string;
   apis?: Api[];
+  referant?: string;
+  freeText?: string;
+  jira?: string;
 
 }

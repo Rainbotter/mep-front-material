@@ -1,58 +1,103 @@
+<h1>{{mep.name}}</h1>
 <h3>Mep</h3>
-<mat-form-field class="formField" appearance="outline">
-  <mat-label>Projet</mat-label>
-  <input autocomplete="off"
-         (focusout)="updateMepValue(mep, 'version')"
-         (focusin)="saveFocusinValue(mep.project)"
-         [readonly]="isClosed()"
-         [(ngModel)]="mep.project"
-         matInput placeholder="maintainer">
-</mat-form-field>
+<div>
+  <mat-form-field class="formField" appearance="outline">
+    <mat-label>Projet</mat-label>
+    <input autocomplete="off"
+           (focusout)="updateMepValue(mep, 'project')"
+           (focusin)="saveFocusinValue(mep.project)"
+           [readonly]="isClosed()"
+           [(ngModel)]="mep.project"
+           matInput>
+  </mat-form-field>
 
-<mat-form-field class="formField" appearance="outline">
-  <mat-label>Version</mat-label>
-  <input autocomplete="off"
-         (focusout)="updateMepValue(mep, 'version')"
-         (focusin)="saveFocusinValue(mep.version)"
-         [readonly]="isClosed()"
-         [(ngModel)]="mep.version"
-         matInput placeholder="maintainer">
-</mat-form-field>
+  <mat-form-field class="formField" appearance="outline">
+    <mat-label>Version</mat-label>
+    <input autocomplete="off"
+           (focusout)="updateMepValue(mep, 'version')"
+           (focusin)="saveFocusinValue(mep.version)"
+           [readonly]="isClosed()"
+           [(ngModel)]="mep.version"
+           matInput>
+  </mat-form-field>
 
-<mat-form-field class="formField" appearance="outline" (click)="saveFocusinValue(mep?.dueDate?.toISOString() || '');">
-  <mat-label>Date de la mep</mat-label>
-  <input autocomplete="off" matInput
-         [matDatepicker]="dueDatePick"
-         [readonly]="isClosed()"
-         [(ngModel)]="mep.dueDate">
-  <mat-datepicker-toggle matSuffix [for]="dueDatePick"></mat-datepicker-toggle>
-  <mat-datepicker (closed)="mep.dueDate.setHours(12); updateMepValue(mep, 'dueDate')" disabled="false"
-                  #dueDatePick></mat-datepicker>
-</mat-form-field>
+  <mat-form-field class="formField" appearance="outline" (click)="saveFocusinValue(mep?.dueDate?.toISOString() || '');">
+    <mat-label>Date de la mep</mat-label>
+    <input autocomplete="off" matInput
+           [matDatepicker]="dueDatePick"
+           [readonly]="isClosed()"
+           [(ngModel)]="mep.dueDate">
+    <mat-datepicker-toggle matSuffix [for]="dueDatePick"></mat-datepicker-toggle>
+    <mat-datepicker (closed)="mep.dueDate.setHours(12); updateMepValue(mep, 'dueDate')" disabled="false"
+                    #dueDatePick></mat-datepicker>
+  </mat-form-field>
 
-<mat-form-field class="formField" appearance="outline">
-  <mat-label>Dernière modification</mat-label>
-  <input autocomplete="off" matInput
-         [matDatepicker]="lastModifDatePick"
-         [readonly]="true"
-         [(ngModel)]="mep.lastModificationDate">
-  <mat-datepicker-toggle matSuffix [for]="lastModifDatePick"></mat-datepicker-toggle>
-  <mat-datepicker disabled #lastModifDatePick></mat-datepicker>
-</mat-form-field>
+  <mat-form-field class="formField" appearance="outline">
+    <mat-label>Dernière modification</mat-label>
+    <input autocomplete="off" matInput
+           [matDatepicker]="lastModifDatePick"
+           [readonly]="true"
+           [(ngModel)]="mep.lastModificationDate">
+    <mat-datepicker-toggle matSuffix [for]="lastModifDatePick"></mat-datepicker-toggle>
+    <mat-datepicker disabled #lastModifDatePick></mat-datepicker>
+  </mat-form-field>
 
-<mat-form-field class="formField" appearance="outline">
-  <mat-label>Date de clotûre</mat-label>
-  <input autocomplete="off" matInput
-         [matDatepicker]="closureDatePick"
-         [readonly]="true"
-         [(ngModel)]="mep.closureDate">
-  <mat-datepicker-toggle matSuffix [for]="closureDatePick"></mat-datepicker-toggle>
-  <mat-datepicker disabled #closureDatePick></mat-datepicker>
-</mat-form-field>
+  <mat-form-field class="formField" appearance="outline">
+    <mat-label>Date de clotûre</mat-label>
+    <input autocomplete="off" matInput
+           [matDatepicker]="closureDatePick"
+           [readonly]="true"
+           [(ngModel)]="mep.closureDate">
+    <mat-datepicker-toggle matSuffix [for]="closureDatePick"></mat-datepicker-toggle>
+    <mat-datepicker disabled #closureDatePick></mat-datepicker>
+  </mat-form-field>
 
-<button *ngIf="!mep.closureDate" (click)="closeMep(mep)" mat-flat-button color="primary">Clotûrer la mep</button>
-<button *ngIf="mep.closureDate" (click)="reOpenMep(mep)" mat-flat-button color="primary">re-ouvrir la mep</button>
-
+  <button *ngIf="!mep.closureDate" (click)="closeMep(mep)" mat-flat-button color="primary">Clotûrer la mep</button>
+  <button *ngIf="mep.closureDate" (click)="reOpenMep(mep)" mat-flat-button color="primary">re-ouvrir la mep</button>
+</div>
+<div>
+  <mat-form-field class="formField" appearance="outline">
+    <mat-label>Referant</mat-label>
+    <input autocomplete="off"
+           (focusout)="updateMepValue(mep, 'referant')"
+           (focusin)="saveFocusinValue(mep.referant)"
+           [readonly]="isClosed()"
+           [(ngModel)]="mep.referant"
+           matInput>
+  </mat-form-field>
+  <mat-form-field class="formField free-text" appearance="outline">
+    <mat-label>Texte libre</mat-label>
+    <textarea autocomplete="off"
+              (focusout)="updateMepValue(mep, 'freeText')"
+              (focusin)="saveFocusinValue(mep.freeText)"
+              [readonly]="isClosed()"
+              [(ngModel)]="mep.freeText"
+              matInput>
+    </textarea>
+  </mat-form-field>
+</div>
+<div>
+  <mat-form-field class="formField jira-link"
+                  appearance="outline">
+    <mat-label>Lien Jira</mat-label>
+    <input autocomplete="off"
+           (focusout)="validateJira()"
+           (focusin)="saveFocusinValue(mep.jira)"
+           [readonly]="!jiraEdition"
+           [(ngModel)]="mep.jira"
+           (click)="navigateToLink(mep.jira)"
+           [class.link-mode]="!jiraEdition && mep.jira"
+           matInput>
+    <button *ngIf="!jiraEdition && !isClosed()" color="primary" mat-icon-button matSuffix (click)="editJira()"
+            [attr.aria-label]="'edit jira link'">
+      <mat-icon matSuffix>edit</mat-icon>
+    </button>
+    <button *ngIf="jiraEdition" color="primary" mat-icon-button matSuffix (click)="cancelJira()"
+            [attr.aria-label]="'edit jira link'">
+      <mat-icon matSuffix>check</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
 <h3>Apis</h3>
 <p>
   <button (click)="addApi()"
@@ -89,7 +134,7 @@
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.maintainer"
                  [readonly]="isClosed()"
-                 matInput placeholder="maintainer">
+                 matInput>
         </mat-form-field>
 
         <mat-form-field class="formField" appearance="outline">
@@ -99,7 +144,7 @@
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.change"
                  [readonly]="isClosed()"
-                 matInput placeholder="change">
+                 matInput>
         </mat-form-field>
 
         <mat-form-field class="formField" appearance="outline">
@@ -109,7 +154,7 @@
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.comment"
                  [readonly]="isClosed()"
-                 matInput placeholder="Commentaire">
+                 matInput>
         </mat-form-field>
 
         <mat-form-field class="formField" appearance="outline">
@@ -119,7 +164,7 @@
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.dbUpdate"
                  [readonly]="isClosed()"
-                 matInput placeholder="Update DB ?">
+                 matInput>
         </mat-form-field>
 
         <mat-form-field class="formField" appearance="outline">
@@ -129,7 +174,7 @@
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.exposition"
                  [readonly]="isClosed()"
-                 matInput placeholder="exposition">
+                 matInput>
         </mat-form-field>
       </div>
 
@@ -142,7 +187,7 @@
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.dockerImage"
                  [readonly]="isClosed()"
-                 matInput placeholder="image docker">
+                 matInput>
         </mat-form-field>
       </div>
 
@@ -270,7 +315,7 @@
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.newVersion"
                  [readonly]="isClosed()"
-                 matInput placeholder="nouvelle Version">
+                 matInput>
         </mat-form-field>
 
         <mat-form-field class="formField" appearance="outline">
@@ -280,7 +325,7 @@
                  (focusin)="saveFocusinValue(api.maintainer)"
                  [(ngModel)]="api.oldVersion"
                  [readonly]="isClosed()"
-                 matInput placeholder="ancienne version">
+                 matInput>
         </mat-form-field>
       </div>
       <h4>A faire</h4>

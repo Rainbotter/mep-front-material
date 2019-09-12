@@ -94,3 +94,16 @@ table {
 .formField {
   margin-right: 1rem;
 }
+
+.free-text {
+  width: 50%;
+}
+
+.jira-link {
+  width: 100%;
+}
+
+.link-mode {
+  color: #0000FF!important;
+  cursor: pointer!important;
+}

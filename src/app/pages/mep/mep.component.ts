@@ -26,6 +26,7 @@ export class MepComponent implements OnInit, OnDestroy {
   public mep: Mep;
   public statuses: string[];
   private subscriptions: Subscription[];
+  public jiraEdition: boolean;
 
   private focusInValue: string;
 
@@ -40,6 +41,7 @@ export class MepComponent implements OnInit, OnDestroy {
     this.subscriptions = [];
     this.statuses = Status.getAllStatus();
     this.updateMep();
+    this.jiraEdition = false;
   }
 
   ngOnInit() {
@@ -86,7 +88,10 @@ export class MepComponent implements OnInit, OnDestroy {
     if (mep[fieldName] !== this.focusInValue) {
       this.apiService.updateMepField(mep.id, fieldName, mep[fieldName])
         .then(res => this.snackService.openActionSucceedSnack())
-        .catch(err => this.snackService.openErrorSnack('Une erreur est survenue lors de la mise à jour du champs ' + fieldName));
+        .catch(err => {
+          this.snackService.openErrorSnack('Une erreur est survenue lors de la mise à jour du champs ' + fieldName);
+          mep[fieldName] = this.focusInValue;
+        });
     }
   }
 
@@ -154,11 +159,15 @@ export class MepComponent implements OnInit, OnDestroy {
   }
 
   public updateMep(): void {
+
+    if (this.isClosed()) {
+      return;
+    }
+
     this.app.startLoading();
     this.subscriptions.push(this.route.queryParams.subscribe(params => {
       if (params['id']) {
         this.mepService.getMep(params['id']).then(value => {
-          this.snackService.openActionSucceedSnack();
           this.app.stopLoading();
           this.mep = value;
         }).catch(err => {
@@ -191,6 +200,26 @@ export class MepComponent implements OnInit, OnDestroy {
       }
     }));
 
+  }
+
+  public editJira(): void {
+    this.jiraEdition = true;
+  }
+
+  public cancelJira(): void {
+    this.mep.jira = this.focusInValue;
+    this.jiraEdition = false;
+  }
+
+  public validateJira(): void {
+    this.updateMepValue(this.mep, 'jira');
+    this.jiraEdition = false;
+  }
+
+  public navigateToLink(link: string): void {
+    if (!this.jiraEdition && link) {
+      window.open(link, '_blank');
+    }
   }
 
 }
